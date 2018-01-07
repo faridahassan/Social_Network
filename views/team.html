@@ -1,0 +1,114 @@
+<div class="container"  data-ng-controller="teamCtrl">
+
+    <div class="block-header" ></div>
+    <div class="row m-b-30">
+          <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12">
+             <div class="card m-b-0" >
+                    <div class="card-header leftsideheader p-10" >
+                        <div class="media">
+                          <div class="media-body">
+                             <b> My Team has <span class="yellow-color">{{team_size_view}}</span> Entrepreneurs </b>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="row p-10">
+                        <div class="col-sm-6 col-sm-offset-6 text-lg-right text-md-right text-sm-right text-sm-left col-xs-12">
+                            <button  class="everyone button-cutomiz-link font-color " ng-click="EveryoneFunc()" > Everyone ({{ Ihelped_view.length + helped_me_view.length}}) </button>
+                            <button  class=" helpedme button-cutomiz-link font-color " ng-click="myFuncHelpedMe()" > Helped me ({{ helped_me_view.length}}) </button>
+                            <button  class=" ihelped button-cutomiz-link font-color " ng-click="myFuncIHelped()" > I Helped  ({{ Ihelped_view.length }}) </button>
+                        </div>
+                    </div>
+                    <div class="card-body ">
+                       <div class="card border-top-team m-b-0 " ng-show="Ihelped"  data-ng-repeat="team in Ihelped_view" >
+                          <div class="card-padding " >
+                              <div class="row p-10">
+                                  <div class="col-xs-1 clear-padding">
+                                    <img ng-if="team.reply.post.user.image === 'NAN'"   src="img/contacts/male.png" alt="" class="img-responsive center-me">
+                                    <img ng-if="team.reply.post.user.image !== 'NAN'"   src="{{team.reply.post.user.image}}" class="img-responsive center-me">
+                                  </div>
+                                  <div class="col-xs-10">
+                                    <span class="font-size-21 font-black"><b> <a ui-sref="pages.profile({userid: team.reply.post.user.id})"> {{team.reply.post.user.firstname}} {{team.reply.post.user.lastname}}  </a></b></span> <br>
+                                    <span class="font-gray">{{team.reply.post.user.businessname}}, {{team.reply.post.user.industry}}, {{team.reply.post.user.city}}, {{team.reply.post.user.country}}</span> <br>
+                                 </div>
+                                 <div class="col-xs-1 clear-padding">
+                                    <a class="pull-right" data-ui-sref="pages.messages"><i class="zmdi zmdi-email zmdi-hc-fw message-icon" ></i></a>
+                                 </div>
+                              </div>
+                              <div class="row m-t-5">
+                                 <div class="col-xs-12">
+                                    <span class="font-size-17 font-black">
+                                    <b>
+                                         <span ng-if="team.reply.post.type === 'pi'" >First Interaction: You provided Personal Intro </span>
+                                         <span ng-if="team.reply.post.type === 'a'" >First Interaction: You provided Advice </span>
+                                         <span ng-if="team.reply.post.type === 'sr'" >First Interaction: You provided Supplier Recommendation  </span>
+                                    </b>
+                                    </span>
+                                
+                                  </div>
+                              </div>
+                              <div class="row m-t-10">
+                                <div class="col-xs-12">
+                                  <a class="bluish-normal underlined" ui-sref="pages.profile({userid: team.reply.post.user.id})"> See {{team.reply.post.user.firstname}}'s latest Request  </a>  
+                                </div>
+                              </div>
+                              <div class="row m-t-10">
+                                <div class="col-xs-12">
+                                   <span >Thank {{team.reply.post.user.firstname}} </span> <a class="bluish-normal underlined" ui-sref="pages.wall"> paying it forward  </a>
+                                </div>
+                              </div>
+                         </div>
+                         </div>
+                       
+                
+                      <div class="card border-top-team m-b-0" ng-show="helpedMe"  data-ng-repeat="team in helped_me_view" >
+                            <div class="card-padding " >
+                              <div class="row p-10">
+                                  <div class="col-xs-1 clear-padding">
+                                    <img ng-if="team.reply.post.user.image === 'NAN'"   src="img/contacts/male.png" alt="" class="img-responsive center-me">
+                                    <img ng-if="team.reply.post.user.image !== 'NAN'"   src="{{team.reply.post.user.image}}" class="img-responsive center-me">
+                                  </div>
+                                  <div class="col-xs-10">
+                                    <span class="font-size-21 font-black"><b> <a ui-sref="pages.profile({userid: team.reply.post.user.id})"> {{team.reply.post.user.firstname}} {{team.reply.post.user.lastname}}  </a></b></span> <br>
+                                    <span class="font-gray">{{team.reply.post.user.businessname}}, {{team.reply.post.user.industry}}, {{team.reply.post.user.city}}, {{team.reply.post.user.country}}</span> <br>
+                                 </div>
+                                 <div class="col-xs-1 clear-padding">
+                                    <a class="pull-right" data-ui-sref="pages.messages"><i class="zmdi zmdi-email zmdi-hc-fw message-icon" ></i></a>
+                                 </div>
+                              </div>
+                              <div class="row m-t-5">
+                                 <div class="col-xs-12">
+                                    <span class="font-size-17 font-black">
+                                    <b>
+                                         <span ng-if="team.reply.post.type === 'pi'" >First Interaction: Provided you with Personal Intro </span>
+                                         <span ng-if="team.reply.post.type === 'a'" >First Interaction: Provided you with Advice </span>
+                                         <span ng-if="team.reply.post.type === 'sr'" >First Interaction: Provided you with Supplier Recommendation  </span>
+                                    </b>
+                                    </span>
+                                
+                                  </div>
+                              </div>
+                              <div class="row m-t-10">
+                                <div class="col-xs-12">
+                                  <a class="bluish-normal underlined" ui-sref="pages.profile({userid: team.reply.post.user.id})"> See {{team.reply.post.user.firstname}}'s latest Request  </a>  
+                                </div>
+                              </div>
+                              <div class="row m-t-10">
+                                <div class="col-xs-12">
+                                   <span >Thank {{team.reply.post.user.firstname}} </span> <a class="bluish-normal underlined" ui-sref="pages.wall"> paying it forward  </a>
+                                </div>
+                              </div>
+                         </div>
+                         
+                         </div>
+                       
+                      </div>
+                  </div>
+            </div>
+              
+           <div class="col-md-4 col-lg-4  hidden-sm hidden-xs">
+            <footer id="cape-footer" data-ng-include src="'template/cape-footer.html'"></footer>
+           </div>
+      
+    </div>
+</div>

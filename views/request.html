@@ -1,0 +1,248 @@
+<div class="container m-b-30"  data-ng-controller="requestCtrl as req">
+     <script type="text/ng-template" id="myModalContent.html">
+          <div class="modal-header">
+              <h4 class="modal-title"><i class='zmdi zmdi-alert-triangle zmdi-hc-fw'></i>Delete Alert</h4>
+          </div>
+          <div class="modal-body">
+              <p>{{ modalContent }}</p>
+          </div>
+          <div class="modal-footer">
+              <button class="btn btn-link" ng-click="ok()">OK</button>
+              <button class="btn btn-link" ng-click="cancel()">Cancel</button>
+          </div>
+     </script>
+    <div class="block-header" ></div>
+    <div class="row m-b-30">
+          <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 ">
+             <div class="card " >
+                    <div class="card-header leftsideheader p-10" >
+                        <div class="media">
+                          <div class="media-body">
+                             <b> My Requests </b>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="card-header  p-t-10 m-b-10 hidden-xs hidden-sm">
+                        
+                        <button class="tab1 button-cutomiz-link font-color pull-right" ng-click="myFuncA();"> Advice  </button>
+                        <button class="tab2 button-cutomiz-link font-color pull-right" ng-click="myFuncSr();" >Supplier Recommendation  </button>
+                        <button class="tab3 button-cutomiz-link font-color pull-right"ng-click="myFuncPi();" >  Personal Intro </button>
+                    </div>
+                    <div class="card-body p-0">
+                    <div class="card border-top-team" ng-show="Pi"  data-ng-repeat="request in Pii" >
+                    
+                        <div class="card-header p-5 row" >
+                            <div class="media">
+                               <div class="media-body">
+                                   
+                                </div>
+                            </div>
+                             
+                        </div>
+                        <div class="card-body p-15 row">
+                            <div class="col-sm-6">
+                              <h4> <b>{{request.created  | date:'MMMM d'}}</b></h4> 
+                              <h5> You requested a <b class="bluish">Personal Intro</b></h5>
+                              <h5> {{request.created  | date:'MMM d, y h:mm:ss a'}}</h5>
+                               <a ng-click="ClosePost(request.id)"  data-ng-if="request.replies_is_closed === '0'" href=""><h5 class="closeRequest"> Close Request </h5></a>
+                               <h5 class="ReopenRequest" data-ng-if="request.replies_is_closed === '1'" > Close Request - <a ng-click="OpenPost(request.id)"  href=""><span class="ReopentagRequest"> Re-Open Request </span></a></h5>
+                               <a ng-click="DeleteModal(request.id)"><h5 class="closeRequest"> Delete </h5></a>
+                            </div>
+                            <div class="col-sm-6">
+                            <p class="text-justify m-b-5">{{request.message}}</p>                  
+                            <div class="wall-img-preview lightbox clearfix p-0 m-0"  data-ng-if="request.url!== NULL">
+                                <div class="wip-item" data-src="{{request.url}}" style="background-image: url({{request.url}});">
+                                    <div class="lightbox-item"></div>
+                                </div>
+                            </div>
+
+                            <ul class="wall-attrs clearfix list-inline list-unstyled" >
+                                <li class="" data-ng-if="request.replies.length !== 0 ">
+                                    <div class="btn-colors btn-demo">
+                                        <a class="bluish" href="" data-ng-if="!req.requestCommenting[request.id]" data-ng-click="req.requestCommenting[request.id] = true" >See More</a>
+                                       <p data-ng-if="request.uniques.length > 2 "> <b>{{request.uniques[request.uniques.length-1].user.firstname}} {{request.uniques[request.uniques.length-1].user.lastname}} </b> and {{request.uniques.length-1}} + Provided Personal Intro</p>
+                                        <p data-ng-if="request.uniques.length === 1 "><b> {{request.uniques[request.uniques.length-1].user.firstname}} {{request.uniques[request.uniques.length-1].user.lastname}} </b> Provided Personal Intro
+                                         </p>
+                                          <p data-ng-if="request.uniques.length === 2 "> <b>{{request.uniques[request.uniques.length-1].user.firstname}} {{request.uniques[request.uniques.length-1].user.lastname}}</b> and<b> {{request.uniques[request.uniques.length-2].user.firstname}} {{request.uniques[request.uniques.length-2].user.lastname}}
+                                          </b>  Provided Personal Intro
+                                         </p>
+                                    </div>
+
+                                </li>
+                                <li data-ng-if="request.replies.length === 0 ">
+                                 <div class="btn-colors btn-demo">
+                                        
+                                         <p> Noone Recommended a Supplier</p>
+                                  </div>
+                                 
+                               </li>
+                            </ul> 
+                            </div>
+                        </div>
+                       <div class="wall-comment-list border-top-none" >
+                            
+                          <div class="wcl-list m-t-10 p-10" data-ng-if="request.replies.length !== 0 ; req.requestCommenting[request.id]">
+                                <div class="media" ng-repeat="replies in request.replies">
+                                    <a ui-sref="pages.profile({userid: replies.user.id})" class="pull-left">
+                                        <img ng-if="replies.user.imageurl === 'NAN'"   src="img/contacts/male.png" class="lv-img-sm">
+                                         <img ng-if="replies.user.imageurl !== 'NAN'"    src="{{replies.user.imageurl}}" class="lv-img-sm">
+                                    </a>
+         
+                                    <div class="media-body">
+                                        <a  ui-sref="pages.profile({userid: replies.user.id})" class="a-title">{{replies.user.firstname}} {{replies.user.lastname}} - </a> <a target="_blank" href="#">{{ replies.user.businessname }}</a> <br><small>{{ replies.user.industry }} - {{ replies.user.city }},{{ replies.user.country }}</small>
+                                        <p class="m-t-5 m-b-0 text-justify">{{replies.message}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row"><div class="col-md-12 text-right"><a data-ng-if="req.requestCommenting[request.id]" data-ng-click="req.requestCommenting[request.id] = false"class="bluish pull-right" href=""> View Less</a></div></div>
+                           </div>
+                    </div>
+                    <div class="card border-top-team" ng-show="Sr"  data-ng-repeat="request in SRR" >
+                    
+                        <div class="card-header p-5 row" >
+                            <div class="media">
+                               <div class="media-body">
+                                   
+                                </div>
+                            </div>
+                             
+                        </div>
+                        <div class="card-body p-15 row">
+                            <div class="col-sm-6">
+                              <h4> <b>{{request.created  | date:'MMMM d'}}</b></h4> 
+                              <h5> You requested a <b class="bluish">Supplier Recommendation</b></h5>
+                              <h5> {{request.created  | date:'MMM d, y h:mm:ss a'}}</h5>
+                               <a ng-click="ClosePost(request.id)"  data-ng-if="request.replies_is_closed === '0'" href=""><h5 class="closeRequest"> Close Request </h5></a>
+                               <h5 class="ReopenRequest" data-ng-if="request.replies_is_closed === '1'" > Close Request - <a ng-click="OpenPost(request.id)"  href=""><span class="ReopentagRequest"> Re-Open Request </span></a></h5>
+                               <a ng-click="DeleteModal(request.id)" href=""><h5 class="closeRequest"> Delete </h5></a>
+                            </div>
+                            <div class="col-sm-6">
+                            <p class="text-justify m-b-5">{{request.message}}</p>                  
+                            <div class="wall-img-preview lightbox clearfix p-0 m-0"  data-ng-if="request.url!== NULL">
+                                <div class="wip-item" data-src="{{request.url}}" style="background-image: url({{request.url}});">
+                                    <div class="lightbox-item"></div>
+                                </div>
+                            </div>
+
+                            <ul class="wall-attrs clearfix list-inline list-unstyled" >
+                                <li class="" data-ng-if="request.replies.length !== 0 ">
+                                    <div class="btn-colors btn-demo">
+                                        <a class="bluish" href="" data-ng-if="!req.requestCommenting[request.id]" data-ng-click="req.requestCommenting[request.id] = true" >See More</a>
+                                         <p data-ng-if="request.uniques.length > 2 "> <b>{{request.uniques[request.uniques.length-1].user.firstname}} {{request.uniques[request.uniques.length-1].user.lastname}} </b> and {{request.uniques.length-1}} + Recommended a Supplier 
+                                         </p>
+                                         <p data-ng-if="request.uniques.length === 1 "><b> {{request.uniques[request.uniques.length-1].user.firstname}} {{request.uniques[request.uniques.length-1].user.lastname}}</b> Recommended a Supplier
+                                         </p>
+                                          <p data-ng-if="request.uniques.length === 2 "><b> {{request.uniques[request.uniques.length-1].user.firstname}} {{request.uniques[request.uniques.length-1].user.lastname}}</b> and <b>{{request.uniques[request.uniques.length-2].user.firstname}} {{request.uniques[request.uniques.length-2].user.lastname}} </b>Recommended a Supplier
+                                         </p>
+                                    </div>
+
+                               </li>
+                                <li data-ng-if="request.replies.length === 0 ">
+                                 <div class="btn-colors btn-demo">
+                                        
+                                         <p> Noone Recommended a Supplier</p>
+                                  </div>
+                                 
+                               </li>
+                            </ul> 
+                            </div>
+                        </div>
+                       <div class="wall-comment-list  border-top-none" >
+                            
+                          <div class="wcl-list m-t-10 p-10" data-ng-if="request.replies.length !== 0 ; req.requestCommenting[request.id]">
+                                <div class="media" ng-repeat="replies in request.replies">
+                                    <a ui-sref="pages.profile({userid: replies.user.id})" class="pull-left">
+                                        <img ng-if="replies.user.imageurl === 'NAN'"   src="img/contacts/male.png" class="lv-img-sm">
+                                         <img ng-if="replies.user.imageurl !== 'NAN'"    src="{{replies.user.imageurl}}" class="lv-img-sm">
+                                    </a>
+         
+                                    <div class="media-body">
+                                        <a  ui-sref="pages.profile({userid: replies.user.id})" class="a-title">{{replies.user.firstname}} {{replies.user.lastname}} - </a> <a target="_blank" href="#">{{ replies.user.businessname }}</a> <br><small>{{ replies.user.industry }} - {{ replies.user.city }},{{ replies.user.country }}</small>
+                                        <p class="m-t-5 m-b-0 text-justify">{{replies.message}}</p>
+                                    </div>
+                                
+                                </div>
+                            </div>
+                            <div class="row"><div class="col-md-12 text-right"><a data-ng-if="req.requestCommenting[request.id]" data-ng-click="req.requestCommenting[request.id] = false"class="bluish pull-right" href=""> View Less</a></div></div>
+                           </div>
+                    </div>
+                    <div class="card border-top-team" ng-show="A"  data-ng-repeat="request in AA" >
+                    
+                        <div class="card-header p-5 row" >
+                            <div class="media">
+                               <div class="media-body">
+                                   
+                                </div>
+                            </div>
+                             
+                        </div>
+                        <div class="card-body p-15 row">
+                            <div class="col-sm-6">
+                              <h4> <b>{{request.created  | date:'MMMM d'}}</b></h4> 
+                              <h5> You requested an <b class="bluish"> Advice</b></h5>
+                              <h5> {{request.created  | date:'MMM d, y h:mm:ss a'}}</h5>
+                               <a ng-click="ClosePost(request.id)"  data-ng-if="request.replies_is_closed === '0'" href=""><h5 class="closeRequest"> Close Request </h5></a>
+                               <h5 class="ReopenRequest" data-ng-if="request.replies_is_closed === '1'" > Close Request - <a ng-click="OpenPost(request.id)"  href=""><span class="ReopentagRequest"> Re-Open Request </span></a></h5>
+                               <a ng-click="DeleteModal(request.id)"><h5 class="closeRequest"> Delete </h5></a>
+                            </div>
+                            <div class="col-sm-6">
+                            <p class="text-justify m-b-5">{{request.message}}</p>                  
+                            <div class="wall-img-preview lightbox clearfix p-0 m-0"  data-ng-if="request.url!== NULL">
+                                <div class="wip-item" data-src="{{request.url}}" style="background-image: url({{request.url}});">
+                                    <div class="lightbox-item"></div>
+                                </div>
+                            </div>
+
+                            <ul class="wall-attrs clearfix list-inline list-unstyled" >
+                                <li class="" data-ng-if="request.replies.length !== 0 ">
+                                    <div class="btn-colors btn-demo">
+                                        <a class="bluish" href="" data-ng-if="!req.requestCommenting[request.id]" data-ng-click="req.requestCommenting[request.id] = true" >See More</a>
+                                         <p data-ng-if="request.uniques.length > 2 "><b>{{request.uniques[request.uniques.length-1].user.firstname}} {{request.uniques[request.uniques.length-1].user.lastname}}</b> and {{request.uniques.length-1}} + Gave an Advice
+                                         </p>
+                                          <p data-ng-if="request.uniques.length === 1 "><b> {{request.uniques[request.uniques.length-1].user.firstname}} {{request.uniques[request.uniques.length-1].user.lastname}}</b> Gave an Advice
+                                         </p>
+                                          <p data-ng-if="request.uniques.length === 2 "> <b>{{request.uniques[request.uniques.length-1].user.firstname}} {{request.uniques[request.uniques.length-1].user.lastname}} </b>and <b> {{request.uniques[request.uniques.length-2].user.firstname}} {{request.uniques[request.uniques.length-2].user.lastname}} </b>Gave an Advice
+                                         </p>
+                                    </div>
+
+                               </li>
+                               <li data-ng-if="request.replies.length === 0 ">
+                                 <div class="btn-colors btn-demo">
+                                        
+                                         <p> Noone Gave an Advice</p>
+                                  </div>
+                                 
+                               </li>
+                            </ul> 
+                            </div>
+                        </div>
+                       <div class="wall-comment-list  border-top-none" >
+                            
+                          <div class="wcl-list m-t-10 p-10" data-ng-if="request.replies.length !== 0 ; req.requestCommenting[request.id]">
+                                <div class="media" ng-repeat="replies in request.replies">
+                                    <a ui-sref="pages.profile({userid: replies.user.id})" class="pull-left">
+                                        <img ng-if="replies.user.imageurl === 'NAN'"   src="img/contacts/male.png" class="lv-img-sm">
+                                         <img ng-if="replies.user.imageurl !== 'NAN'"    src="{{replies.user.imageurl}}" class="lv-img-sm">
+                                    </a>
+         
+                                    <div class="media-body">
+                                        <a  ui-sref="pages.profile({userid: replies.user.id})" class="a-title">{{replies.user.firstname}} {{replies.user.lastname}} - </a> <a target="_blank" href="#">{{ replies.user.businessname }}</a> <br><small>{{ replies.user.industry }} - {{ replies.user.city }},{{ replies.user.country }}</small>
+                                        <p class="m-t-5 m-b-0 text-justify">{{replies.message}}</p>
+                                    </div>
+                                
+                                  
+                                </div>
+                            </div>
+                            <div class="row"><div class="col-md-12 text-right"><a data-ng-if="req.requestCommenting[request.id]" data-ng-click="req.requestCommenting[request.id] = false"class="bluish pull-right" href=""> View Less</a></div></div>
+                           </div>
+                    </div>
+                   
+                  </div>
+            </div>
+          </div> 
+           <div class="col-md-4 col-lg-4  hidden-sm hidden-xs">
+              <footer id="cape-footer" data-ng-include src="'template/cape-footer.html'"></footer>
+          </div>
+      
+    </div>
+</div>

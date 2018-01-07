@@ -1,0 +1,1128 @@
+<script type="text/ng-template" id="myModalContent.html">
+  <div class="modal-header">
+      <h4 class="modal-title"><i class='zmdi zmdi-alert-triangle zmdi-hc-fw'></i>Delete Alert</h4>
+  </div>
+  <div class="modal-body">
+      <p>{{ modalContent }}</p>
+  </div>
+  <div class="modal-footer">
+      <button class="btn btn-link" ng-click="ok()">OK</button>
+      <button class="btn btn-link" ng-click="cancel()">Cancel</button>
+  </div>
+</script>
+<div   class="container" data-ng-controller="newsfeedCtrl as newctrl">
+  <div class="block-header" ></div>
+  <div class="row" data-ng-controller="TabsDemoCtrl" >
+    <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 ">
+      <div class="card cardtab"  >
+        <tabset justified="true">
+          <tab ng-repeat="tab in tabs | limitTo:3" ng-click="currentposttype(tab.title)" active="tab.active" disable="tab.disabled">
+            <tab-heading class="wall-tab-heading">
+              <i ng-if="tab.title === 'Personal Intro' " class="zmdi zmdi-accounts zmdi-hc-fw"></i>
+              <i ng-if="tab.title === 'Advice' " class="zmdi zmdi-plus-square zmdi-hc-fw"></i>
+              <i ng-if="tab.title === 'Supplier Recommendation' " class="zmdi zmdi-shield-check zmdi-hc-fw"></i>
+              {{tab.title}}
+            </tab-heading>
+            <div class="">
+              <form ng-submit="postnewsfeed()" class="p-l-5 p-r-5">
+                <div class="tabform p-r-5">
+                  <div class="row" >
+                    <div class="col-xs-12">
+                      <div class="col-xs-1  hidden-xs remove-margin">
+                        <img ng-if="User.imageurl === 'NAN'" src="img/contacts/male.png" alt="" class="w-100">
+                        <img ng-if="User.imageurl !== 'NAN'" src="{{User.imageurl}}" alt="" class="w-100">
+                      </div>
+                      <div class="col-sm-9 col-xs-12">
+                        <textarea required class="form-control wall-textarea" ng-model="tab.message" rows="6" placeholder="Always ask for what you need, fellow entrepreneurs are keen to help when they can."></textarea>
+                      </div>
+                      <div class=" col-sm-2 col-xs-12 text-center">
+                        <i class="zmdi zmdi-eye "></i>
+                        <select ng-model="tab.isPrivate" name="isPrivate" class="selectpicker tabpublicprivateselect">
+                          <option  value="0"  >Public</option>
+                          <option  value="1"  >Private</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 text-right">
+                      <span class="wall-request-hint">Brief, clear, specific requests work best</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row  tabcontrols" >
+                  <div class="col-md-12">
+                    <div class="col-sm-1 custom-column-width remove-margin hidden-xs" >
+                      <input type="file"   file-model="myFile"  onchange="angular.element(this).scope().fileNameChanged(this)" class="zmdi zmdi-camera-add zmdi-hc-fw font-cust  input-customize"/>
+                    </div>
+                    <div class="uploadPlaceHolder col-md-9 col-lg-9 col-sm-9 col-xs-9  hidden-xs">You can upload a photo to support your request</div>
+                    <div class="uploadImage col-md-9 col-lg-9 col-sm-9 col-xs-9  hidden-xs">
+                      <div class="col-md-11 col-lg-11 col-sm-11 col-xs-11 text-center"> 
+                        <img class="uploadedimagethumbnail thumbnailUploaded img-responsive"   src="" alt="your image" height="100" />
+                      </div>
+                      <i class="zmdi zmdi-close-circle-o zmdi-hc-fw pull-right"  ng-click="closeUpload()"></i>
+                    </div>
+                    <div class="col-xs-12 col-sm-2 text-center" >
+                      <button type="submit" class="btn bgm-blue"> Request <i class="zmdi zmdi-mail-send zmdi-hc-fw"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </tab>
+        </tabset>
+      </div>
+      <div class="filterspannel col-md-12 col-lg-12 col-xs-12 col-sm-12 ">
+        <div class="remove-margin col-sm-4">
+          <label class="white-color switch-font">Local </label>
+          <div class="toggle-switch " data-ts-color="black">
+            <input ng-model="globalFilter" ng-click="GlobalOrLocal(globalFilter);"  id="ts1" type="checkbox" hidden="hidden">
+            <label for="ts1" class="ts-helper"></label>
+          </div>
+          <label class="white-color switch-font">Global Network</label>
+        </div>
+        <div class="remove-margin col-sm-3">
+          <div class="filters-select">
+            <select ng-model="industry" data-ng-change="IndustryFilter(industry);" chosen data-placeholder="Industry" ng-disabled="" >
+              <option value="Auto Motive">Auto Motive</option>
+              <option value="Web Development">Web Development</option>
+              <option value="Photography">Photography</option>
+            </select>
+          </div>
+        </div>
+        <div class="remove-margin col-sm-3">
+          <div class="filters-select ">
+            <select ng-model="type" ng-change="TypeFilter(type);" class="w-100" chosen data-placeholder="Request Type" >
+              <option value="pi">Personal Intro</option>
+              <option value="a">Advice</option>
+              <option value="sr">Recommend a Supplier</option>
+            </select>
+          </div>
+        </div>
+        <div class="remove-margin col-sm-2">
+          <div class="filters-select ">
+            <select ng-model="country" ng-change="CountryFilter(country);" class="w-100" chosen data-placeholder="Country" >
+              <option value="United States">United States</option>
+              <option value="United Kingdom">United Kingdom</option>
+              <option value="Afghanistan">Afghanistan</option>
+              <option value="Aland Islands">Aland Islands</option>
+              <option value="Albania">Albania</option>
+              <option value="Algeria">Algeria</option>
+              <option value="Egypt">Egypt</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 white text-center m-b-20 p-t-10">
+        <p class="font-size-21 bluish-normal">Take an easy step to be helpful to fellow entreprenuers now</p>
+      </div>
+      <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 m-0 p-0" data-ng-repeat="newpost in AllnewsFeed"  >
+        <!-- Supplier Recommendation -->
+        <div class="card"  data-ng-if="newpost.type === 'sr'">
+            <div class="media card-padding">
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="col-xs-1 clear-padding">
+                    <img ng-if="newpost.user.image === 'NAN'"   src="img/contacts/male.png" alt="" class="img-responsive">
+                    <img ng-if="newpost.user.image !== 'NAN'"   src="{{newpost.user.image}}" class="img-responsive">
+                  </div>
+                  <div class="col-xs-9">
+                    <span class="font-size-21 font-black"><b> <a ui-sref="pages.profile({userid: newpost.user.id})"> {{newpost.user.firstname}} {{newpost.user.lastname}}  </a></b></span> <br>
+                    <span class="font-gray">{{newpost.user.businessname}}, {{newpost.user.industry}}, {{newpost.user.city}}, {{newpost.user.country}}</span> <br>
+                    <!-- <span class="font-gray">{{newpost.created}}</span> -->  
+                  </div>
+                </div>
+              </div>
+              <div class="row m-t-10">
+                <div class="col-xs-12">
+                  <p>{{newpost.message}}</p>
+                </div>
+<<<<<<< HEAD
+              <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 m-0 p-0" data-ng-repeat="newpost in AllnewsFeed"  > 
+                    <div class="card"  data-ng-if="newpost.type === 'sr'">
+                       <div class="card-header p-10" >
+                            <div class="media">
+                            
+                                <div class="pull-left">
+                                  <img ng-if="newpost.user.image === 'NAN'"   src="img/contacts/male.png" alt="" class=" postImage" >
+                                  <img ng-if="newpost.user.image !== 'NAN'"   src="{{newpost.user.image}}" class=" postImage" >
+                                </div>
+                                <div class="media-body">
+                                    <h4> <b> <a ui-sref="pages.profile({userid: newpost.user.id})"> {{newpost.user.firstname}} {{newpost.user.lastname}}  </a></b> <br> <small><a  target="_blank" href="http://{{newpost.user.businessurl}}"> {{newpost.user.businessname}} </a> - {{newpost.user.industry}} , {{newpost.user.country}}</small></h4>
+                               </div>
+                            </div>
+                             <ul class="actions"  data-ng-if="newpost.user.id === User.id">
+                                  <li class="dropdown" dropdown="">
+                                      <a href="" dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
+                                          <i class="zmdi zmdi-more-vert"></i>
+                                      </a>
+                      
+                                      <ul class="dropdown-menu dropdown-menu-right">
+                                          <li>
+                                              <a  href="">Edit</a>
+                                          </li>
+                                          <li>
+                                              <a  ng-click="DeleteModal(newpost.id)" href="" >Delete</a>
+                                          </li>
+                                      </ul>
+                                  </li>
+                            </ul>
+                        </div>
+                        <div class="card-body card-padding" >
+                        <div class="row border-bottom">
+                        <h5>{{newpost.message}}</h5>                   
+                        <div class="wall-img-preview lightbox clearfix"  data-ng-if="newpost.url!== NULL">
+                           <img src="{{newpost.url}}" class="img-responsive center-me">
+                            
+                        </div>
+                        </div>
+                        <ul class="wall-attrs clearfix list-inline list-unstyled">
+                               <li class="wa-users">
+                                  <div class="btn-colors btn-demo" data-ng-if="!newctrl.wallCommenting[newpost.id] && newpost.user.id != User.id && newpost.replies_is_closed === '0'" data-ng-click="newctrl.wallCommenting[newpost.id] = true;StopTimeout();">
+
+                                     <button class="btn bgm-blue"> Recommend  
+                                      <i class="zmdi zmdi-shield-check zmdi-hc-fw"></i>
+                                     </button>
+
+                                  </div>
+                                   
+                              </li>
+                              <li class="p-t-15" data-ng-if="newpost.uniques.length !== 0 ">
+                                    <div class="btn-colors btn-demo">
+                                       
+                                         <p data-ng-if="newpost.uniques.length > 2 "> <b>{{newpost.uniques[newpost.uniques.length-1].user.firstname}} {{newpost.uniques[newpost.uniques.length-1].user.lastname}} </b> and {{newpost.uniques.length-1}} + recommended a supplier 
+                                         </p>
+                                         <p data-ng-if="newpost.uniques.length === 1 "><b> {{newpost.uniques[newpost.uniques.length-1].user.firstname}} {{newpost.uniques[newpost.uniques.length-1].user.lastname}}</b> recommended a supplier
+                                         </p>
+                                          <p data-ng-if="newpost.uniques.length === 2 "><b> {{newpost.uniques[newpost.uniques.length-1].user.firstname}} {{newpost.uniques[newpost.uniques.length-1].user.lastname}}</b> and <b>{{newpost.uniques[newpost.uniques.length-2].user.firstname}} {{newpost.uniques[newpost.uniques.length-2].user.lastname}} </b>recommended a supplier
+                                         </p>
+                                    </div>
+
+                              </li>
+                        </ul> 
+                        </div>
+                        <div class="wall-comment-list" data-ng-if="newpost.type==='sr'">
+                            
+                            <div class="wcl-form yellowish-bg">
+                                <div class="wc-comment p-10 m-b-5" data-ng-if="newctrl.wallCommenting[newpost.id]">
+                                    <form  ng-submit="showFunchion(newpost.id,newpost.type,newpost.user.id,email,message,tab.isPrivate,company,phone,name); newctrl.wallCommenting[newpost.id] = false;StartTimeout();" class="w-100" > 
+                                        <p class="font-weight-bolder font-black">Who would you like to recommend ?</p>
+                                       <div class="row m-b-0">
+                                           <div class="col-sm-6 ">
+                                               <div class="form-group">
+                                                   <div class="fg-line">
+                                                       <input  ng-change="StopTimeout()"  type="text" required ng-model="name" class="form-control" placeholder="Name">
+                                                   </div>
+                                               </div>
+                                                <div class="form-group">
+                                                   <div class="fg-line">
+                                                       <input ng-change="StopTimeout()" type="text" ng-model="phone" class="form-control" placeholder="Phone">
+                                                   </div>
+                                               </div>
+                                          
+                                           </div>
+                                           <div class="col-sm-6">
+                                              <div class="form-group">
+                                                   <div class="fg-line">
+                                                       <input ng-change="StopTimeout()" type="email" required ng-model="email" class="form-control" placeholder="Email">
+                                                   </div>
+                                               </div>
+                                              <div class="form-group">
+                                                   <div class="fg-line">
+                                                       <input ng-change="StopTimeout()" type="text" ng-model="company" class="form-control" placeholder="Company(optional)">
+                                                   </div>
+                                               </div>
+                                             
+                                           </div>
+                                           <div class="col-sm-12">
+                                             
+                                               <div class="form-group ">
+                                                   <div class="fg-line">
+                                                       <textarea ng-change="StopTimeout()" ng-model="message" class="form-control" rows="5" data-auto-size placeholder="Message (optional)......"></textarea>
+                                                   </div>
+                                               </div>
+                                             
+                                           </div>
+                                       </div>
+                                       <div class="row m-l-0 m-r-10">
+                                            <div class="checkbox m-b-15 pull-left">
+                                                 
+                                             <select ng-change="StopTimeout()" ng-init="tab.isPrivate = 0 "  ng-model="tab.isPrivate" name="isPrivate" class="selectpicker pull-left p-5">
+                                                <option  value="0"  >Public</option>
+                                                <option  value="1"  >Private</option>
+                                            </select>
+
+                                           </div>
+                                           <div class="m-t-15 pull-right">
+
+                                               <button type="submit"  class="btn bgm-blue waves-effect btn-sm btn-primary">Share Supplier Details</button>
+                                               <button class="btn bgm-blue waves-effect btn-sm btn-link c-white" data-ng-click="newctrl.wallCommenting[newpost.id] = false;StartTimeout();">Cancel</button>
+                                           </div>
+                                       </div>
+                                    </form>
+                                </div>
+                            </div>
+                            
+                            <div class="wcl-list m-t-10 p-10" data-ng-if="newpost.replies.length !== 0 && newpost.replies_is_private === '0' ">
+                                <div class="media" ng-repeat="replies in newpost.replies"  data-ng-if="replies.is_private === '0' ; ">
+                                    <a ui-sref="pages.profile({userid: replies.user.id})" class="pull-left">
+                                        <img ng-if="replies.user.image === 'NAN'"   src="img/contacts/male.png" class="lv-img-sm">
+                                         <img ng-if="replies.user.image !== 'NAN'"    src="{{replies.user.image}}" class="lv-img-sm">
+                                    </a>
+         
+                                    <div class="media-body">
+                                        <a ui-sref="pages.profile({userid: replies.user.id})" class="a-title">{{replies.user.firstname}} {{replies.user.lastname}} - </a> <a target="_blank" href="http://{{replies.user.businessurl}}">{{ replies.user.businessname }}</a> <br><small>{{ replies.user.industry }} - {{ replies.user.city }},{{ replies.user.country }}</small>
+                                        <p class="m-t-5 m-b-0">Recommended {{replies.message}} </p>
+                                    </div>
+                                
+                                    <ul class="actions">
+                                        <li class="dropdown" dropdown="">
+                                            <a href="" dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
+                                                <i class="zmdi zmdi-more-vert"></i>
+                                            </a>
+                            
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li>
+                                                    <a href="">Report</a>
+                                                </li>
+                                                <li>
+                                                    <a ng-click="DeleteModal(newpost.id)" href="">Delete</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                       
+=======
+                     </div>
+            </div>
+            <div class="row" data-ng-if="newpost.url!== NULL" >
+              <div class="col-xs-12">
+                <img src="{{newpost.url}}" class="img-responsive center-me">
+              </div>
+            </div>
+            
+          
+            <ul class="wall-attrs clearfix list-inline list-unstyled card-padding">
+              <li class="wa-users">
+                <div class="btn-colors btn-demo" data-ng-if="!newctrl.wallCommenting[newpost.id] && newpost.user.id != User.id && newpost.replies_is_closed === '0'" data-ng-click="newctrl.wallCommenting[newpost.id] = true;StopTimeout();">
+                  <button class="btn bgm-blue"> Recommend  
+                  <i class="zmdi zmdi-shield-check zmdi-hc-fw"></i>
+                  </button>
+                </div>
+              </li>
+              <li class="p-t-15" data-ng-if="newpost.uniques.length !== 0 ">
+                <div class="btn-colors btn-demo">
+                  <p data-ng-if="newpost.uniques.length > 2 "> <b>{{newpost.uniques[newpost.uniques.length-1].user.firstname}} {{newpost.uniques[newpost.uniques.length-1].user.lastname}} </b> and {{newpost.uniques.length-1}} + recommended a supplier 
+                  </p>
+                  <p data-ng-if="newpost.uniques.length === 1 " ><b> {{newpost.uniques[newpost.uniques.length-1].user.firstname}} {{newpost.uniques[newpost.uniques.length-1].user.lastname}}</b> recommended a supplier
+                  </p>
+                  <p data-ng-if="newpost.uniques.length === 2 "><b> {{newpost.uniques[newpost.uniques.length-1].user.firstname}} {{newpost.uniques[newpost.uniques.length-1].user.lastname}}</b> and <b>{{newpost.uniques[newpost.uniques.length-2].user.firstname}} {{newpost.uniques[newpost.uniques.length-2].user.lastname}} </b>recommended a supplier
+                  </p>
+                </div>
+              </li>
+            </ul>
+          <div class="wall-comment-list" data-ng-if="newpost.type==='sr'">
+            <div class="wcl-form yellowish-bg">
+              <div class="wc-comment p-10 m-b-5" data-ng-if="newctrl.wallCommenting[newpost.id]">
+                <form  ng-submit="showFunchion(newpost.id,newpost.type,newpost.user.id,email,message,tab.isPrivate,company,phone,name); newctrl.wallCommenting[newpost.id] = false;StartTimeout();" class="w-100" >
+                  <p class="font-weight-bolder font-black">Who would you like to recommend ?</p>
+                  <div class="row m-b-0">
+                    <div class="col-sm-6 ">
+                      <div class="form-group">
+                        <div class="fg-line">
+                          <input  ng-change="StopTimeout()"  type="text" required ng-model="name" class="form-control" placeholder="Name">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="fg-line">
+                          <input ng-change="StopTimeout()" type="text" ng-model="phone" class="form-control" placeholder="Phone">
+>>>>>>> 06f7a8418a0b160359fef6df88a110c6d5f27e87
+                        </div>
+                      </div>
+                    </div>
+<<<<<<< HEAD
+                    <div class="card"  data-ng-if="newpost.type ==='pi'" >
+                       <div class="card-header p-10" >
+                           
+                            <div class="media">
+                            
+                                <div class="pull-left">
+                                  <img ng-if="newpost.user.image === 'NAN'"   src="img/contacts/male.png" alt="" class="postImage">
+                                  <img ng-if="newpost.user.image !== 'NAN'"   src="{{newpost.user.image}}" class="postImage">
+                                </div>
+                                <div class="media-body">
+                                    <h4> <b> <a ui-sref="pages.profile({userid: newpost.user.id})"> {{newpost.user.firstname}} {{newpost.user.lastname}}  </a></b> <br> <small><a target="_blank" href="http://{{newpost.user.businessurl}}"> {{newpost.user.businessname}} </a> - {{newpost.user.industry}} , {{newpost.user.country}}</small></h4>
+                                   
+                                    
+                               </div>
+                            </div>
+                             <ul class="actions"  data-ng-if="newpost.user.id === User.id">
+                                  <li class="dropdown" dropdown="">
+                                      <a href="" dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
+                                          <i class="zmdi zmdi-more-vert"></i>
+                                      </a>
+                      
+                                      <ul class="dropdown-menu dropdown-menu-right">
+                                          <li>
+                                              <a  href="">Edit</a>
+                                          </li>
+                                          <li>
+                                              <a  ng-click="DeleteModal(newpost.id)" href="" >Delete</a>
+                                          </li>
+                                      </ul>
+                                  </li>
+                            </ul>
+=======
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <div class="fg-line">
+                          <input ng-change="StopTimeout()" type="email" required ng-model="email" class="form-control" placeholder="Email">
+>>>>>>> 06f7a8418a0b160359fef6df88a110c6d5f27e87
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="fg-line">
+                          <input ng-change="StopTimeout()" type="text" ng-model="company" class="form-control" placeholder="Company(optional)">
+                        </div>
+                      </div>
+                    </div>
+<<<<<<< HEAD
+                    <div class="card"  data-ng-if="newpost.type === 'a'">
+                        <div class="card-header p-10" >
+                           
+                            <div class="media">
+                            
+                                <div class="pull-left">
+                                  <img ng-if="newpost.user.image === 'NAN'"   src="img/contacts/male.png" alt="" class="postImage">
+                                  <img ng-if="newpost.user.image !== 'NAN'"   src="{{newpost.user.image}}" class="postImage">
+                                </div>
+                                <div class="media-body">
+                                    <h4> <b> <a ui-sref="pages.profile({userid: newpost.user.id})"> {{newpost.user.firstname}} {{newpost.user.lastname}}  </a></b> <br> <small><a target="_blank" href="http://{{newpost.user.businessurl}}"> {{newpost.user.businessname}} </a> - {{newpost.user.industry}} , {{newpost.user.country}}</small></h4>
+                                   
+                                    
+                               </div>
+                            </div>
+                             <ul class="actions"  data-ng-if="newpost.user.id === User.id">
+                                  <li class="dropdown" dropdown="">
+                                      <a href="" dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
+                                          <i class="zmdi zmdi-more-vert"></i>
+                                      </a>
+                      
+                                      <ul class="dropdown-menu dropdown-menu-right">
+                                          <li>
+                                              <a  href="">Edit</a>
+                                          </li>
+                                          <li>
+                                              <a  ng-click="DeleteModal(newpost.id)" href="" >Delete</a>
+                                          </li>
+                                      </ul>
+                                  </li>
+                            </ul>
+                        </div>
+                        <div class="card-body card-padding">
+                            <h5 class="font-">{{newpost.message}}</h5>                    
+                            <div class="wall-img-preview lightbox clearfix" data-ng-if="newpost.url!== NULL" >
+                               <img src="{{newpost.url}}" class="img-responsive center-me">
+                                <div class="wip-item"  data-src="{{newpost.url}}" style="background-image: url({{newpost.url}});">
+                                    <div class="lightbox-item"></div>
+                                </div>
+                            </div>
+
+                            <ul class="wall-attrs clearfix list-inline list-unstyled">
+                                <li class="wa-users">
+                                    <div class="btn-colors btn-demo">
+
+                                        <button class="btn bgm-blue" data-ng-if="!newctrl.wallCommenting[newpost.id] && newpost.user.id != User.id && newpost.replies_is_closed === '0'" data-ng-click="newctrl.wallCommenting[newpost.id] = true;StopTimeout();"> <span>Give an Advice</span>  <i class="zmdi zmdi-plus-square zmdi-hc-fw"></i></button>
+
+                                    </div>
+                               </li>
+                                <li class="p-t-15" data-ng-if="newpost.uniques.length !== 0 ">
+                                    <div class="btn-colors btn-demo">
+                                       
+                                         <p data-ng-if="newpost.uniques.length > 2 "> <b>{{newpost.uniques[newpost.uniques.length-1].user.firstname}} {{newpost.uniques[newpost.uniques.length-1].user.lastname}} </b> and {{newpost.uniques.length-1}} + provided advice
+                                         </p>
+                                         <p data-ng-if="newpost.uniques.length === 1 "><b> {{newpost.uniques[newpost.uniques.length-1].user.firstname}} {{newpost.uniques[newpost.uniques.length-1].user.lastname}}</b> provided advice
+                                         </p>
+                                          <p data-ng-if="newpost.uniques.length === 2 "><b> {{newpost.uniques[newpost.uniques.length-1].user.firstname}} {{newpost.uniques[newpost.uniques.length-1].user.lastname}}</b> and <b>{{newpost.uniques[newpost.uniques.length-2].user.firstname}} {{newpost.uniques[newpost.uniques.length-2].user.lastname}} </b>provided advice
+                                         </p>
+                                    </div>
+
+                              </li>
+                            </ul> 
+                        </div>
+                        <div class="wall-comment-list" data-ng-if="newpost.type==='a'">
+                            
+                            <div class="wcl-form yellowish-bg">
+                                <div class="wc-comment  p-10 m-b-5" data-ng-if="newctrl.wallCommenting[newpost.id]">
+                                    <form ng-submit="showFunchion(newpost.id,newpost.type,newpost.user.id,'',message,tab.isPrivate,'','','');newctrl.wallCommenting[newpost.id] = false;StartTimeout();" class="wcl-form yellowish-bg"> 
+                                     <div class="row m-b-0">
+                                          <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12">
+                                              <p class="font-weight-bolder font-black">Advice</p>
+                                          </div>
+                                           <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12">
+                                               <div class="form-group ">
+                                                   <div class="fg-line">
+                                                       <textarea ng-change="StopTimeout()" required ng-model="message" class="form-control" rows="5" data-auto-size placeholder="Message ......"></textarea>
+                                                   </div>
+                                               </div>
+                                             
+                                           </div>
+                                       </div>
+                                       <div class="row m-l-0 m-r-0">
+                                            <div class="checkbox m-b-15 pull-left">
+                                               <select ng-change="StopTimeout()" ng-init="tab.isPrivate = 0 "  ng-model="tab.isPrivate" name="isPrivate" class="selectpicker pull-left p-5">
+                                                    <option  value="0"  >Public</option>
+                                                    <option  value="1"  >Private</option>
+                                               </select>
+                                           </div>
+                                           <div class="m-t-15 pull-right">
+
+                                               <button type="submit"  class="btn bgm-blue waves-effect btn-sm btn-primary">Send</button>
+                                               <button class="btn bgm-blue waves-effect btn-sm btn-primary" data-ng-click="newctrl.wallCommenting[newpost.id] = false;StartTimeout();">Cancel</button>
+                                           </div>
+                                       </div>
+                                    </form>
+                                     <hr>
+                                </div>
+
+                            </div>
+                           
+                            
+                            <div class="wcl-list m-t-10 p-10" data-ng-if="newpost.replies.length !== 0 && newpost.replies_is_private === '0' ">
+                                <div class="media" ng-repeat="replies in newpost.replies" data-ng-if="replies.is_private === '0' ">
+                                    <a ui-sref="pages.profile({userid: replies.user.id})" class="pull-left">
+                                        <img ng-if="replies.user.image === 'NAN'"   src="img/contacts/male.png" class="lv-img-sm">
+                                         <img ng-if="replies.user.image !== 'NAN'"    src="{{replies.user.image}}" class="lv-img-sm">
+                                    </a>
+         
+                                    <div class="media-body">
+                                        <a  ui-sref="pages.profile({userid: replies.user.id})" class="a-title">{{replies.user.firstname}} {{replies.user.lastname}} - </a> <a target="_blank" href="http://{{replies.user.businessurl}}">{{ replies.user.businessname }}</a> <br><small>{{ replies.user.industry }} - {{ replies.user.city }},{{ replies.user.country }}</small>
+                                        <p class="m-t-5 m-b-0 text-justify">{{replies.message}}</p>
+                                    </div>
+                                
+                                    <ul class="actions">
+                                        <li class="dropdown" dropdown="">
+                                            <a href="" dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
+                                                <i class="zmdi zmdi-more-vert"></i>
+                                            </a>
+                            
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li>
+                                                    <a href="">Report</a>
+                                                </li>
+                                                <li>
+                                                    <a href="">Delete</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+=======
+                    <div class="col-sm-12">
+                      <div class="form-group ">
+                        <div class="fg-line">
+                          <textarea ng-change="StopTimeout()" ng-model="message" class="form-control" rows="5" data-auto-size placeholder="Message (optional)......"></textarea>
+>>>>>>> 06f7a8418a0b160359fef6df88a110c6d5f27e87
+                        </div>
+                      </div>
+                    </div>
+<<<<<<< HEAD
+                    <div class="card weclomepost  p-t-10"  data-ng-if="newpost.type==='w'">
+                        <div class="media card-padding">
+                          <div class="row p-15">
+                            <div class="pull-left col-md-3 col-lg-3 col-sm-3 col-xs-3"> 
+                              <img ng-if="newpost.user.image === 'NAN'"class="img-responsive"  src="img/contacts/male.png">
+                              <img ng-if="newpost.user.image !== 'NAN'" class="img-responsive"  src="{{newpost.user.image}}" >
+                           </div>
+                            <div class=" col-lg-8 col-md-8 col-xs-8 col-sm-8">
+                              <span class="font-size-20 font-black">Welcome <a ui-sref="pages.profile({userid: newpost.user.id})">  <span class="bold-800">{{newpost.user.firstname}} {{newpost.user.lastname}}</span></a>,<a target="_blank" href="http://{{newpost.user.businessurl}}"> {{newpost.user.businessname}} </a> <br> {{newpost.user.industry}} - {{newpost.user.city}},{{newpost.user.country}}</span>
+                                  
+                                  <br>
+                                  <a href="http://{{newpost.user.businessurl}}" target="_blank" > <small class="businessurlfont"> {{newpost.user.businessurl}} </small> </a>    
+
+                                  <p class="text-justify hidden-xs hidden-sm m-t-10 font-black" > {{newpost.user.businessoverview}} </p>
+                                   
+                            </div>
+                          </div>
+                          <div class="row p-25">
+                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 logoborder" ng-if="newpost.user.logourl !== NAN">
+                             <p class="text-justify hidden-lg hidden-md" > {{newpost.user.businessoverview}} </p>
+                             <center><img  src="{{newpost.user.logourl}}" class="logoPost hidden-sm hidden-xs" ></center>
+                           </div>
+                          </div>
+                         </div>
+                         <ul class="wall-attrs clearfix list-inline list-unstyled welcomepostul p-25">
+                          
+                            <li class="wa-users">
+
+                                  <div  class="btn-colors btn-demo card-padding" >
+                                    <div class="row p-r-20">
+                                       <small style="color:rgba(119, 119, 119, 0.76);" class="m-r-5">Support this entreprenuer</small>
+                                      <button data-ng-click= "shareClick(newpost.id);" id="share{{newpost.id}}"   class="btn bgm-blue m-0"  > Share 
+                                        <i class="zmdi zmdi-share zmdi-hc-fw"></i>
+                                      </button>
+                                    </div>
+                                    <div class="row pull-right p-r-20 ">
+                                    <ul  id="list{{newpost.id}}"  class="shareList" style="display:none;" >
+                                      <li class="col-sm-12 emailshare p-0" data-ng-click="newctrl.detailsCommenting[newpost.id] = true;">
+                                        <div class="col-sm-4 p-5 m-0 boder-right-separator">
+                                          <i class="zmdi zmdi-email zmdi-hc-fw"></i>
+                                        </div>
+                                        <div class="col-sm-8 p-5 m-0">Email</div>
+                                      </li>
+                                      <li class="col-sm-12 facebookshare p-0"  ng-controller='temp'>
+                                        <div class="col-sm-4 p-5 m-0 boder-right-separator">
+                                          <i class="zmdi zmdi-facebook zmdi-hc-fw"></i>
+                                        </div>
+                                       
+                                        <div facebookg  data-url='http://www.equation-solutions.com/reciprocas/reciprocasangular/recipo/index.html#/pages/profile/{{newpost.user.id}}'  data-callback='callback' class="col-sm-8 p-5 m-0">Facebook</div>
+                                      </li>
+                                      <li class="col-sm-12 twittershare p-0">
+                                        <div class="col-sm-4 p-5 m-0 boder-right-separator">
+                                          <i class="zmdi zmdi-twitter zmdi-hc-fw"></i>
+                                        </div>
+                                        <div twitterr  data-url='http://www.equation-solutions.com/reciprocas/reciprocasangular/recipo/index.html#/pages/profile/{{newpost.user.id}}' data-text='{{text}}' class="col-sm-8 p-5 m-0">Twitter</div>
+                                      </li>
+                                       <li class="col-sm-12 linkedinshare p-0">
+                                        <div class="col-sm-4 p-5 m-0 boder-right-separator">
+                                          <i class="zmdi zmdi-linkedin-box zmdi-hc-fw"></i>
+                                        </div>
+                                        <div linkedinn data-url='http://www.equation-solutions.com/reciprocas/reciprocasangular/recipo/index.html#/pages/profile/{{newpost.user.id}}' data-title='{{title}}' data-summary="{{text}}"  class="col-sm-8 p-5 m-0">LinkedIn</div>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                   
+                                  </div>
+                           </li>
+                        </ul> 
+                        <div class="wall-comment-list" >
+                          <div class="wcl-form yellowish-bg">
+                                <div class="wc-comment bgm-white p-10 m-b-5" data-ng-if="newctrl.detailsCommenting[newpost.id]">
+                                    <form ng-submit="showFunchion(newpost.id,newpost.type,newpost.user.id ,email,message,'','','','');newctrl.detailsCommenting[newpost.id] = false;"   class="w-100">
+                                      
+                                        <h5>Send the Details of {{newpost.user.businessname}} to</h5>
+
+                                      <div class="row emailpreview m-b-10 p-10">
+                                            <div class="ccol-sm-12 col-lg-12 col-md-12 col-xs-12 m-b-0 ">
+                                                 <div class="form-group">
+                                                   <div class="fg-line">
+                                                       <input required ng-change="StopTimeout()" type="email" ng-model="email" class="form-control" placeholder="Email">
+                                                   </div>
+                                               </div>
+                                            </div>
+                                             <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <div class="fg-line">
+                                                        <textarea ng-change="StopTimeout()" ng-model="message" class="form-control" rows="5" data-auto-size placeholder="Message (optional)......"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           
+                                        </div>
+                                        <div class="row p-5 emailpreview">
+                                            <p class="font-color">Subject: “ From {{User.firstname}} {{User.lastname}} through Reciprocas  </p> 
+
+                                            <p class="font-color"> I came across this business on Reciprocās and through it would be interest you <br> {{User.firstname}} {{User.lastname}} </p>
+
+                                            <p>+Personal message (optional)</p>
+                                            <p>{{message}}</p>
+                                           
+
+                                        </div>
+                                        <div class="row m-l-0 m-r-0">
+                                           <div class="m-t-15 col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                                                <div>
+                                                    <span class="pull-left m-r-25">An email will be sent to your contact copying {{User.firstname}}. Thank you
+                                                    </span>
+                                                    <button   class="btn bgm-black waves-effect btn-sm btn-primary">Send</button>
+                                                    <button class="btn bgm-black waves-effect btn-sm btn-link c-white btn-margin-in-wall " data-ng-click="newctrl.detailsCommenting[newpost.id] = false">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div ng-controller='temp' class="wc-comment bgm-white p-10 m-b-5" data-ng-if="newctrl.shareCommenting[newpost.id]">
+                                    <form  class="w-100">
+
+                                    <h5>You can share using :</h5>
+                                        <ul class="wall-attrs clearfix list-inline list-unstyled">
+
+                                        <li  class="wa-stats" tooltip="Facebook">
+                                            <span><i facebook  class="zmdi  zmdi-facebook-box font-size-zmd font-width-zmd"  data-url='{{url}}'  data-callback='callback'></i> {{ shares }}</span>
+                                            
+                                          
+                                        </li>
+                                          
+                                          <li class="wa-stats" tooltip="Twitter">
+                                            <span><i twitterr data-url='{{url}}'  data-size="medium" data-text='{{text}}' class="zmdi zmdi-share zmdi-twitter-box font-size-zmd font-width-zmd"></i></span>
+                                  
+                                        </li>
+                                        <li class="wa-stats" tooltip="Linkedin">
+                                            <span><i linkedinn  data-url='{{url}}' data-title='{{title}}' data-summary="{{text}}"  class="zmdi zmdi-linkedin-box zmdi-hc-fw font-size-zmd font-width-zmd"></i> {{linkedinshares}}</span>
+                                           
+                                        </li>
+                                       
+                                    </ul> 
+                                       
+                                        <div class="row m-l-0 m-r-0">
+                                            <div class="m-t-15 col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                                                <div>
+                                                  <button class="btn bgm-black waves-effect btn-sm btn-link c-white btn-margin-in-wall " data-ng-click="newctrl.shareCommenting[newpost.id] = false">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+=======
+                  </div>
+                  <div class="row m-l-0 m-r-10">
+                    <div class="checkbox m-b-15 pull-left">
+                      <select ng-change="StopTimeout()" ng-init="tab.isPrivate = 0 "  ng-model="tab.isPrivate" name="isPrivate" class="selectpicker pull-left p-5">
+                        <option  value="0"  >Public</option>
+                        <option  value="1"  >Private</option>
+                      </select>
+>>>>>>> 06f7a8418a0b160359fef6df88a110c6d5f27e87
+                    </div>
+                    <div class="m-t-15 pull-right">
+                      <button type="submit"  class="btn bgm-blue waves-effect btn-sm btn-primary">Share Supplier Details</button>
+                      <button class="btn bgm-blue waves-effect btn-sm btn-link c-white" data-ng-click="newctrl.wallCommenting[newpost.id] = false;StartTimeout();">Cancel</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="wcl-list m-t-10 p-10" data-ng-if="newpost.replies.length !== 0 && newpost.replies_is_private === '0' ">
+              <div class="media" ng-repeat="replies in newpost.replies"  data-ng-if="replies.is_private === '0' ; ">
+                <a ui-sref="pages.profile({userid: replies.user.id})" class="pull-left">
+                <img ng-if="replies.user.image === 'NAN'"   src="img/contacts/male.png" class="lv-img-sm">
+                <img ng-if="replies.user.image !== 'NAN'"    src="{{replies.user.image}}" class="lv-img-sm">
+                </a>
+                <div class="media-body">
+                  <a ui-sref="pages.profile({userid: replies.user.id})" class="a-title">{{replies.user.firstname}} {{replies.user.lastname}} - </a> <a target="_blank" href="#">{{ replies.user.businessname }}</a> <br><small>{{ replies.user.industry }} - {{ replies.user.city }},{{ replies.user.country }}</small>
+                  <p class="m-t-5 m-b-0">Recommended {{replies.message}} </p>
+                </div>
+                <ul class="actions">
+                  <li class="dropdown" dropdown="">
+                    <a href="" dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
+                    <i class="zmdi zmdi-more-vert"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                      <li>
+                        <a href="">Report</a>
+                      </li>
+                      <li>
+                        <a ng-click="DeleteModal(newpost.id)" href="">Delete</a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end supplier recommdation -->
+        <!-- personal intro -->
+        <div class="card"  data-ng-if="newpost.type ==='pi'" >
+         <div class="media card-padding" >
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="col-xs-1 clear-padding">
+                  <img ng-if="newpost.user.image === 'NAN'"   src="img/contacts/male.png" alt="" class="img-responsive">
+                  <img ng-if="newpost.user.image !== 'NAN'"   src="{{newpost.user.image}}" class="img-responsive">
+                </div>
+                <div class="col-xs-9">
+                  <span class="font-size-21 font-black"><b> <a ui-sref="pages.profile({userid: newpost.user.id})"> {{newpost.user.firstname}} {{newpost.user.lastname}}  </a></b></span> <br>
+                  <span class="font-gray">{{newpost.user.businessname}}, {{newpost.user.industry}}, {{newpost.user.city}}, {{newpost.user.country}}</span> <br>
+                  <!-- <span class="font-gray">{{newpost.created}}</span> -->  
+                </div>
+              </div>
+            </div>
+            <div class="row m-t-10">
+              <div class="col-xs-12">
+                <p>{{newpost.message}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="row" data-ng-if="newpost.url!== NULL" >
+            <div class="col-xs-12">
+              <img src="{{newpost.url}}" class="img-responsive center-me">
+            </div>
+          </div>
+          
+            <ul class="wall-attrs clearfix list-inline list-unstyled card-padding">
+              <li class="wa-users">
+                <div class="btn-colors btn-demo">
+                  <button class="btn bgm-blue " data-ng-if="!newctrl.wallCommenting[newpost.id] && newpost.user.id != User.id && newpost.replies_is_closed === '0'" data-ng-click="newctrl.wallCommenting[newpost.id] = true;StopTimeout();"> make intro <i  class="zmdi zmdi-accounts zmdi-hc-fw"></i></button>
+                </div>
+              </li>
+            </ul>
+          <div class="wall-comment-list"  >
+            <div class="wcl-form yellowish-bg">
+              <div class="wc-comment  p-10 m-b-5" data-ng-if="newctrl.wallCommenting[newpost.id]">
+                <form  class="w-100" ng-submit="showFunchion(newpost.id,newpost.type,newpost.user.id ,email,message,'undefined','undefined','undefined','undefined');newctrl.wallCommenting[newpost.id] = false;StartTimeout();">
+                  <p class="font-weight-bolder font-black">Introduce {{newpost.user.firstname}} {{newpost.user.lastname}} to:</p>
+                  <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12 m-b-0 ">
+                    <div class="form-group">
+                      <div class="fg-line">
+                        <input ng-change="StopTimeout()" required type="email" ng-model="email" class="form-control" placeholder="Email" required >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12">
+                    <div class="form-group">
+                      <div class="fg-line">
+                        <textarea ng-change="StopTimeout()" ng-model="message" class="form-control" rows="5" data-auto-size placeholder="Message (optional)......"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div class="row p-5 emailpreview">
+                    <p class="font-color">Subject: “ Intro From {{User.firstname}} {{User.lastname}}  through Reciprocas  </p> 
+                    
+                    <p> Message provided by user </p>
+                    <p>{{message}}</p>
+                    
+                    <p class="font-color">Sent through Reciprocās</p>
+                    
+                    
+                    </div> -->
+                  <div class="row m-l-0 m-r-0">
+                    <div class="m-t-15 col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                      <div>
+                        <span class="pull-left m-r-25">An email will be sent to your contact copying {{User.firstname}}. Thank you
+                        </span>
+                        <button class="btn bgm-blue waves-effect btn-sm btn-link c-white btn-margin-in-wall  pull-right m-r-10" data-ng-click="newctrl.wallCommenting[newpost.id] = false;StartTimeout();">Cancel</button>
+                        <button  type="submit" class="btn bgm-blue waves-effect btn-sm btn-primary pull-right">Send</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end personal intro -->
+        <!-- advice -->
+        <div class="card"  data-ng-if="newpost.type === 'a'">
+          <div class="media card-padding" >
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="col-xs-1 clear-padding">
+                  <img ng-if="newpost.user.image === 'NAN'"   src="img/contacts/male.png" alt="" class="img-responsive">
+                  <img ng-if="newpost.user.image !== 'NAN'"   src="{{newpost.user.image}}" class="img-responsive">
+                </div>
+                <div class="col-xs-9">
+                  <span class="font-size-21 font-black"><b> <a ui-sref="pages.profile({userid: newpost.user.id})"> {{newpost.user.firstname}} {{newpost.user.lastname}}  </a></b></span> <br>
+                  <span class="font-gray">{{newpost.user.businessname}}, {{newpost.user.industry}}, {{newpost.user.city}}, {{newpost.user.country}}</span> <br>
+                  <!-- <span class="font-gray">{{newpost.created}}</span> -->  
+                </div>
+              </div>
+            </div>
+            <div class="row m-t-10">
+              <div class="col-xs-12">
+                <p>{{newpost.message}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="row" data-ng-if="newpost.url!== NULL" >
+            <div class="col-xs-12">
+              <img src="{{newpost.url}}" class="img-responsive center-me">
+            </div>
+          </div>
+          <ul class="wall-attrs clearfix list-inline list-unstyled card-padding">
+            <li class="wa-users">
+              <div class="btn-colors btn-demo">
+                <button class="btn bgm-blue" data-ng-if="!newctrl.wallCommenting[newpost.id] && newpost.user.id != User.id && newpost.replies_is_closed === '0'" data-ng-click="newctrl.wallCommenting[newpost.id] = true;StopTimeout();"> <span>Give an Advice</span>  <i class="zmdi zmdi-plus-square zmdi-hc-fw"></i></button>
+              </div>
+            </li>
+            <li class="p-t-15" data-ng-if="newpost.uniques.length !== 0 ">
+              <div class="btn-colors btn-demo">
+                <p data-ng-if="newpost.uniques.length > 2 "> <b>{{newpost.uniques[newpost.uniques.length-1].user.firstname}} {{newpost.uniques[newpost.uniques.length-1].user.lastname}} </b> and {{newpost.uniques.length-1}}+ provided advice
+                </p>
+                <p data-ng-if="newpost.uniques.length === 1 "><b> {{newpost.uniques[newpost.uniques.length-1].user.firstname}} {{newpost.uniques[newpost.uniques.length-1].user.lastname}}</b> provided advice
+                </p>
+                <p data-ng-if="newpost.uniques.length === 2 "><b> {{newpost.uniques[newpost.uniques.length-1].user.firstname}} {{newpost.uniques[newpost.uniques.length-1].user.lastname}}</b> and <b>{{newpost.uniques[newpost.uniques.length-2].user.firstname}} {{newpost.uniques[newpost.uniques.length-2].user.lastname}} </b>provided advice
+                </p>
+              </div>
+            </li>
+          </ul>
+                  <div class="wall-comment-list" data-ng-if="newpost.type==='a'">
+          <div class="wcl-form yellowish-bg">
+            <div class="wc-comment  p-10 m-b-5" data-ng-if="newctrl.wallCommenting[newpost.id]">
+              <form ng-submit="showFunchion(newpost.id,newpost.type,newpost.user.id,'',message,tab.isPrivate,'','','');newctrl.wallCommenting[newpost.id] = false;StartTimeout();" class="wcl-form yellowish-bg">
+                <div class="row m-b-0">
+                  <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12">
+                    <p class="font-weight-bolder font-black">Advice</p>
+                  </div>
+                  <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12">
+                    <div class="form-group ">
+                      <div class="fg-line">
+                        <textarea ng-change="StopTimeout()" required ng-model="message" class="form-control" rows="5" data-auto-size placeholder="Message ......"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row m-l-0 m-r-0">
+                  <div class="checkbox m-b-15 pull-left">
+                    <select ng-change="StopTimeout()" ng-init="tab.isPrivate = 0 "  ng-model="tab.isPrivate" name="isPrivate" class="selectpicker pull-left p-5">
+                      <option  value="0"  >Public</option>
+                      <option  value="1"  >Private</option>
+                    </select>
+                  </div>
+                  <div class="m-t-15 pull-right">
+                    <button type="submit"  class="btn bgm-blue waves-effect btn-sm btn-primary">Send</button>
+                    <button class="btn bgm-blue waves-effect btn-sm btn-primary" data-ng-click="newctrl.wallCommenting[newpost.id] = false;StartTimeout();">Cancel</button>
+                  </div>
+                </div>
+              </form>
+              <hr>
+            </div>
+          </div>
+          <div class="wcl-list m-t-10 p-10" data-ng-if="newpost.replies.length !== 0 && newpost.replies_is_private === '0' ">
+            <div class="media" ng-repeat="replies in newpost.replies" data-ng-if="replies.is_private === '0' ">
+              <a ui-sref="pages.profile({userid: replies.user.id})" class="pull-left">
+              <img ng-if="replies.user.image === 'NAN'"   src="img/contacts/male.png" class="lv-img-sm">
+              <img ng-if="replies.user.image !== 'NAN'"    src="{{replies.user.image}}" class="lv-img-sm">
+              </a>
+              <div class="media-body">
+                <a  ui-sref="pages.profile({userid: replies.user.id})" class="a-title">{{replies.user.firstname}} {{replies.user.lastname}} - </a> <a target="_blank" href="#">{{ replies.user.businessname }}</a> <br><small>{{ replies.user.industry }} - {{ replies.user.city }},{{ replies.user.country }}</small>
+                <p class="m-t-5 m-b-0 text-justify">{{replies.message}}</p>
+              </div>
+              <ul class="actions">
+                <li class="dropdown" dropdown="">
+                  <a href="" dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
+                  <i class="zmdi zmdi-more-vert"></i>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                      <a href="">Report</a>
+                    </li>
+                    <li>
+                      <a href="">Delete</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        </div>
+
+    <!-- end advice -->
+    <!-- welcome post -->
+    <div class="card weclomepost"  data-ng-if="newpost.type==='w'">
+      <div class="media card-padding">
+        <div class="row">
+          <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3"> 
+            <img ng-if="newpost.user.image === 'NAN'"class="img-responsive"  src="img/contacts/male.png">
+            <img ng-if="newpost.user.image !== 'NAN'" class="img-responsive"  src="{{newpost.user.image}}" >
+          </div>
+          <div class=" col-lg-8 col-md-8 col-xs-8 col-sm-8">
+            <span class="font-size-21 font-black"><i>Welcome,</i> <a ui-sref="pages.profile({userid: newpost.user.id})">  <span class="bold-800">{{newpost.user.firstname}} {{newpost.user.lastname}}</span></a>, {{newpost.user.businessname}} </span><br> <span class="font-size-17 font-black">{{newpost.user.industry}} - {{newpost.user.city}},{{newpost.user.country}}</span> <br>
+            <a class="m-t-30" href="http://{{newpost.user.businessurl}}" target="_blank" > <small class="businessurlfont font-size-17"> {{newpost.user.businessurl}} </small> </a>    
+            <p class="text-justify hidden-xs hidden-sm m-t-10 font-black" > {{newpost.user.businessoverview}} </p>
+          </div>
+        </div>
+        <div class="row m-t-10">
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 " ng-if="newpost.user.logourl !== NAN">
+            <div class="welcome-border">
+              <p class="text-justify hidden-lg hidden-md" > {{newpost.user.businessoverview}} </p>
+              <img  src="{{newpost.user.logourl}}" class="img-responsive  center-me  hidden-sm hidden-xs" >
+            </div>
+          </div>
+        </div>
+      </div>
+      <ul class="wall-attrs clearfix list-inline list-unstyled welcomepostul ">
+        <li class="wa-users">
+          <div  class="btn-colors btn-demo card-padding" >
+            <div class="row p-r-20">
+              <span style="color:rgba(119, 119, 119, 0.76);" class="m-r-5 font-size-16">Support this entreprenuer</span>
+              <button data-ng-click= "shareClick(newpost.id);" id="share{{newpost.id}}"   class="btn bgm-blue m-0"  > Share 
+              <i class="zmdi zmdi-share zmdi-hc-fw"></i>
+              </button>
+            </div>
+            <div class="row pull-right p-r-20 ">
+              <ul  id="list{{newpost.id}}"  class="shareList" style="display:none;" >
+                <li class="col-sm-12 emailshare p-0">
+                  <div class="col-sm-4 p-5 m-0 boder-right-separator">
+                    <i class="zmdi zmdi-email zmdi-hc-fw"></i>
+                  </div>
+                  <div class="col-sm-8 p-5 m-0">Email</div>
+                </li>
+                <li class="col-sm-12 facebookshare p-0">
+                  <div class="col-sm-4 p-5 m-0 boder-right-separator">
+                    <i class="zmdi zmdi-facebook zmdi-hc-fw"></i>
+                  </div>
+                  <div class="col-sm-8 p-5 m-0">Facebook</div>
+                </li>
+                <li class="col-sm-12 twittershare p-0">
+                  <div class="col-sm-4 p-5 m-0 boder-right-separator">
+                    <i class="zmdi zmdi-twitter zmdi-hc-fw"></i>
+                  </div>
+                  <div class="col-sm-8 p-5 m-0">Twitter</div>
+                </li>
+                <li class="col-sm-12 linkedinshare p-0">
+                  <div class="col-sm-4 p-5 m-0 boder-right-separator">
+                    <i class="zmdi zmdi-linkedin-box zmdi-hc-fw"></i>
+                  </div>
+                  <div class="col-sm-8 p-5 m-0">LinkedIn</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="wall-comment-list" >
+        <div class="wcl-form yellowish-bg">
+          <div class="wc-comment bgm-white p-10 m-b-5" data-ng-if="newctrl.detailsCommenting[newpost.id]">
+            <form  class="w-100">
+              <h5>Send the Details of {{newpost.user.businessname}} to</h5>
+              <div class="row emailpreview m-b-10 p-10">
+                <div class="ccol-sm-12 col-lg-12 col-md-12 col-xs-12 m-b-0 ">
+                  <div class="form-group">
+                    <div class="fg-line">
+                      <input ng-change="StopTimeout()" type="email" ng-model="email" class="form-control" placeholder="Email">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12">
+                  <div class="form-group">
+                    <div class="fg-line">
+                      <textarea ng-change="StopTimeout()" ng-model="message" class="form-control" rows="5" data-auto-size placeholder="Message (optional)......"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row p-5 emailpreview">
+                <p class="font-color">Subject: “ From {{User.firstname}} {{User.lastname}} through Reciprocas  </p>
+                <p class="font-color"> I came across this business on Reciprocās and through it would be interest you <br> {{User.firstname}} {{User.lastname}} </p>
+                <p>+Personal message (optional)</p>
+                <p>{{message}}</p>
+              </div>
+              <div class="row m-l-0 m-r-0">
+                <div class="m-t-15 col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                  <div>
+                    <span class="pull-left m-r-25">An email will be sent to your contact copying {{User.firstname}}. Thank you
+                    </span>
+                    <button ng-click="showFunchion(newpost.id,newpost.type,newpost.user.id ,email,message,'','','','');showReplyfunction()"  class="btn bgm-black waves-effect btn-sm btn-primary">Send</button>
+                    <button class="btn bgm-black waves-effect btn-sm btn-link c-white btn-margin-in-wall " data-ng-click="newctrl.detailsCommenting[newpost.id] = false">Cancel</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div ng-controller='temp' class="wc-comment bgm-white p-10 m-b-5" data-ng-if="newctrl.shareCommenting[newpost.id]">
+            <form  class="w-100">
+              <h5>You can share using :</h5>
+              <ul class="wall-attrs clearfix list-inline list-unstyled">
+                <li  class="wa-stats" tooltip="Facebook">
+                  <span><i facebookg  class="zmdi  zmdi-facebook-box font-size-zmd font-width-zmd"  data-url='{{url}}'  data-callback='callback'></i> {{ shares }}</span>
+                </li>
+                <li class="wa-stats" tooltip="Twitter">
+                  <span><i twitterr data-url='{{url}}'  data-size="medium" data-text='{{text}}' class="zmdi zmdi-share zmdi-twitter-box font-size-zmd font-width-zmd"></i></span>
+                </li>
+                <li class="wa-stats" tooltip="Linkedin">
+                  <span><i linkedinn  data-url='{{url}}' data-title='{{title}}' data-summary="{{text}}"  class="zmdi zmdi-linkedin-box zmdi-hc-fw font-size-zmd font-width-zmd"></i> {{linkedinshares}}</span>
+                </li>
+              </ul>
+              <div class="row m-l-0 m-r-0">
+                <div class="m-t-15 col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                  <div>
+                    <button class="btn bgm-black waves-effect btn-sm btn-link c-white btn-margin-in-wall " data-ng-click="newctrl.shareCommenting[newpost.id] = false">Cancel</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end welcome post -->
+  </div>
+  </div>
+  <div class="col-md-4 col-lg-4 hidden-sm hidden-xs">
+    <div class="card">
+      <div class="card-header leftsideheader p-10" >
+        <div class="media">
+          <div class="media-body">
+            <b> Top Entrepreneurs</b>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="media m-15">
+          <div class="media-body font-black">
+            <div class="pull-left m-r-10">
+              <img ng-if="topenterpreneurs[0].image === 'NAN'"   src="img/contacts/male.png" alt="" class="imageTopEntrepreneurs">
+              <img ng-if="topenterpreneurs[0].image !== 'NAN'"   src="{{topenterpreneurs[0].image}}" class="imageTopEntrepreneurs">
+            </div>
+            <span class="font-size-21 font-black"><b> <a ui-sref="pages.profile({userid: topenterpreneurs[0].id})"> {{topenterpreneurs[0].firstname}} {{topenterpreneurs[0].lastname}},</a></b> {{topenterpreneurs[0].businessname}}</span> <br>
+            <span class="font-black font-size-17">{{topenterpreneurs[0].industry}}, {{topenterpreneurs[0].city}}, {{topenterpreneurs[0].country}}</span> <br>
+            <span class="font-size-17">
+                <a href="http://{{topenterpreneurs[0].businessurl}}" target="_blank" >
+                    <span class="businessurlfont"> {{topenterpreneurs[0].businessurl}} </span> 
+                </a>
+            </span>
+            <!-- <p class="text-justify  bold-400" > {{topenterpreneurs[0].businessoverview}} </p>
+              <center><img src="{{topenterpreneurs[0].logourl}}" class="logoPost hidden-sm hidden-xs" ></center>
+              -->
+            <div class="row p-15">
+              <p class="text-justify " > {{topenterpreneurs[0].businessoverview | limitTo:150 }}
+                <span ng-if="topenterpreneurs[0].businessoverview .length > 150">...</span> 
+              </p>
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 top-entrepreneurs-border">
+                <img src="{{topenterpreneurs[0].logourl}}" class="img-responsive hidden-sm hidden-xs center-me" >
+              </div>
+            </div>
+          </div>
+          </div>
+            <ul class="wall-attrs clearfix list-inline list-unstyled welcomepostul p-10">
+              <li class="wa-users">
+                <div  class="btn-colors btn-demo" >
+                  <div class="row m-r-15">
+                    <span style="color:rgba(119, 119, 119, 0.76);" class="m-r-15">Support this entreprenuer </span>
+                    <button data-ng-click= "shareClick('topmonth');" id="topmonth"   class="btn bgm-blue "  > Share 
+                    <i class="zmdi zmdi-share zmdi-hc-fw "></i>
+                    </button>
+                  </div>
+                  <div class="row pull-right p-r-20 ">
+                    <ul  id="listtopmonth"  class="shareList" style="display:none;" >
+                      <li class="col-sm-12 emailshare p-0">
+                        <div class="col-sm-4 p-5 m-0 boder-right-separator">
+                          <i class="zmdi zmdi-email zmdi-hc-fw"></i>
+                        </div>
+                        <div class="col-sm-8 p-5 m-0">Email</div>
+                      </li>
+                      <li class="col-sm-12 facebookshare p-0">
+                        <div class="col-sm-4 p-5 m-0 boder-right-separator">
+                          <i class="zmdi zmdi-facebook zmdi-hc-fw"></i>
+                        </div>
+                        <div class="col-sm-8 p-5 m-0">Facebook</div>
+                      </li>
+                      <li class="col-sm-12 twittershare p-0">
+                        <div class="col-sm-4 p-5 m-0 boder-right-separator">
+                          <i class="zmdi zmdi-twitter zmdi-hc-fw"></i>
+                        </div>
+                        <div class="col-sm-8 p-5 m-0">Twitter</div>
+                      </li>
+                      <li class="col-sm-12 linkedinshare p-0">
+                        <div class="col-sm-4 p-5 m-0 boder-right-separator">
+                          <i class="zmdi zmdi-linkedin-box zmdi-hc-fw"></i>
+                        </div>
+                        <div class="col-sm-8 p-5 m-0">LinkedIn</div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+            </ul>
+      </div>
+    </div>
+    <footer id="cape-footer" data-ng-include src="'template/cape-footer.html'"></footer>
+  </div>
+</div>
+</div>

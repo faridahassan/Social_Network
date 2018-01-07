@@ -1,0 +1,114 @@
+<div class="container m-b-30" data-ng-controller="topenterprenuersCtrl as tectrl" >
+
+    <div class="block-header" ></div>
+    <div class="row m-b-30">
+          <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12">
+               <div class="pull-right col-sm-10 m-t-10 filters-top-enterprenuers">
+                 
+                              <div class="col-sm-4 ">
+                                 <div class="form-group ">
+                                     <div class="filters-select ">
+                                          <select ng-model="time" data-ng-change="TimeFilter(time);" chosen class="w-100"  data-placeholder="This Month" ng-disabled="" >
+                                            <option selected  value="0">This Month</option>
+                                            <option value="1">All The Time</option>
+                                               
+                                           </select>
+
+                                     </div>
+                                 </div>
+                              </div>
+                              <div class="col-sm-4 ">
+                                 <div class="form-group ">
+                                     <div class="filters-select ">
+                                          <select ng-model="industry" data-ng-change="IndustryFilter(industry);" chosen class="w-100"  data-placeholder="Industry" ng-disabled="" >
+                                                <option value="Auto Motive">Auto Motive</option>
+                                                <option value="Web Development">Web Development</option>
+                                                <option value="Photography">Photography</option>
+                                           </select>
+
+                                     </div>
+                                 </div>
+                              </div>
+                            
+                              <div class="col-sm-4 ">
+                                 <div class="form-group">
+                                     <div class="filters-select ">
+                                            <select ng-model="country" ng-change="CountryFilter(country);" class="w-100" chosen data-placeholder="Country" >
+                                                <option value="United States">United States</option>
+                                                <option value="United Kingdom">United Kingdom</option>
+                                                <option value="Afghanistan">Afghanistan</option>
+                                                <option value="Aland Islands">Aland Islands</option>
+                                                <option value="Albania">Albania</option>
+                                                <option value="Algeria">Algeria</option>
+                                                <option value="Egypt">Egypt</option>
+                                            </select>
+
+                                     </div>
+                                 </div>
+                              </div>
+                            </div>
+                     <div class="card " >
+                    <div class="card-header leftsideheader p-10" >
+                        <div class="media">
+                          <div class="media-body">
+                             <b class="pull-left"> Top Entrepreneurs </b>
+                            
+                          </div>
+                        </div>
+
+                    </div>
+                   
+                 
+                    <div class="card-body">
+                     <div class="card border-top-team p-10"   ng-repeat=" user in topenterpreneurs " >
+                        <div class="card-header p-10" >
+                            <div class="media">
+                            
+                                <div class="pull-left">
+                                  <img ng-if="user.image === 'NAN'"   src="img/contacts/male.png" alt="" class="postImage">
+                                  <img ng-if="user.image !== 'NAN'"   src="{{user.image}}" class="postImage">
+                                </div>
+                                <div class="media-body">
+                                    <h4> <b> <a ui-sref="pages.profile({userid: user.id})"> {{user.firstname}} {{user.lastname}}  </a></b>
+                                         <a class="pull-right" data-ui-sref="pages.messages">
+                                          <i class="zmdi zmdi-email zmdi-hc-fw message-icon" ></i>
+                                        </a><br> <small><a  target="_blank" href="#"> {{user.businessname}} </a> - {{user.industry}} , {{user.country}}</small><h4 class="pull-right font-color"><b>Cape 66° points:</b> <b class="yellow-color">{{ user.points }}</b></h4></h4>
+                               </div>
+                            </div>
+
+                        </div>
+                        <div class="card-body" >
+
+                            <div class=" col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                <h4 class="font-color"> 
+                                  <b> {{user.businessname}} -  {{user.industry}} </b> <br>
+                                  <a href="http://{{user.businessurl}}" target="_blank" >
+                                   <small class="businessurlfont"> {{user.businessurl}} </small> 
+                                 </a>    
+
+                                </h4>
+                                <p class="text-justify hidden-xs hidden-sm" > {{user.businessoverview}} </p>
+                                   
+                            </div>
+                 
+                            <div class="row p-25">
+                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 logoborder">
+                                 <p class="text-justify hidden-lg hidden-md" > {{user.businessoverview}}</p>
+                                 <center><img src="{{user.logourl}}" class="logoPost hidden-sm hidden-xs" ></center>
+
+                               </div>
+                            </div>
+                        </div>
+                       
+                       </div>
+                     
+                    </div>
+                   
+                </div>
+             </div> 
+           <div class="col-md-4 col-lg-4  hidden-sm hidden-xs">
+            <footer id="cape-footer" data-ng-include src="'template/cape-footer.html'"></footer>
+        </div>
+      
+    </div>
+</div>

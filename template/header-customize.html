@@ -1,0 +1,37 @@
+<div class="header-inner p-t-10" id="header-login" data-ng-controller="loginCtrl as lgctrl">
+    <div class="container">
+        <div class="col-xs-12">
+        <div class="col-sm-2 col-xs-12">
+            <img class="img-responsive center-me" src="img/cape66.png"/>
+        </div>
+        <div class="col-sm-6 col-sm-offset-4  col-xs-12 text-right">
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-xs-5 stick-right">
+                        <input ng-model="email" class="maximize-me form-control black-border fc-alt " type="text" name="email" placeholder="Email:" >    
+                    </div>
+                    <div class="col-xs-5 stick-left">
+                        <input ng-model="password" class="maximize-me form-control black-border fc-alt" type="password" name="Password :" placeholder="Password:" >
+                    </div>
+                    <div class="col-xs-2">
+                        <button ng-click="authoniticateLogin()"  class="btn bgm-blue  sign-in-button"> Sign in</button>
+                    </div>
+                </div>
+                <span class="error"> {{notify}} </span>
+            </div>
+            <div class="row m-t-5">
+                <div class="col-xs-5 text-left stick-right">
+                  <input type="checkbox"> <span class="font-black">Keep me logged in</span>
+                </div>
+                <div class="col-xs-5 text-left stick-left"><a class="bluish-normal underlined p-t-10 " href="#"> Forgot logins?</a></div>
+                <div class="col-xs-2"></div>
+                 
+            </div>
+        </div>
+    </div>
+   </div>
+</div>
+
+
+<!-- Top Search Content -->
+

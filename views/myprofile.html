@@ -1,0 +1,962 @@
+<div class="container" data-ng-controller="profileCtrl as pctrl">
+<<<<<<< HEAD
+
+    <div class="block-header" ></div>
+    <div class="row" >
+      <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 ">
+         
+        <div class="card" >
+             <form data-ng-submit="pctrl.submit('profileInfo', 'Profile Information')" >
+            <div class="card-header  p-10" >
+                <div class="col-md-12 text-right" data-ng-if="pctrl.editInfo === 1">
+                    <button  class="btn bgm-gray btn-primary btn-sm" type="submit">Close Edit </button>   
+                </div>
+                
+            </div>
+            <div class="card-body">
+                  <div class="row p-10">
+                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3 hidden-xs" >
+                    
+                      <img  ng-if="user.image === 'NAN'"class="img-responsive profilepic"  src="img/contacts/male.png">
+                      <img ng-if="user.image !== 'NAN'" class="img-responsive profilepic"  src="{{user.image}}" >
+                      <div class="profile-change-photo" data-ng-if="pctrl.editInfo === 1">
+                       <form >
+                          <input type="file"   file-model="myFile"  onchange="angular.element(this).scope().fileNameChanged(this , 'profile')" class=" zmdi zmdi-camera-add zmdi-hc-fw font-cust m-r-5 p-t-5  col-md-1 col-lg-1 col-sm-1 col-xs-2 p-r-30 input-customize"/> 
+                        
+                        </form>
+                        <h5 class="white-color m-t-15"> Change Photo</h5>
+                      </div>
+                    </div>
+                  
+                    <div class=" col-lg-9 col-md-9 col-xs-12 col-sm-9" data-ng-if="pctrl.editInfo === 0">
+                        <div class="row">
+                          <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                            <h4 class="font-color"> 
+                                      <b><label>{{user.firstname}} {{user.lastname}} </label>        </b>
+                            </h4>
+                          </div>
+                          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <div class="founder-label p-10 " tooltip="One of the first Cape 66° in my country">Founder Member
+                            </div>
+                              <a  data-ui-sref="pages.messages">
+                                <i class="zmdi zmdi-email zmdi-hc-fw message-icon" ></i>
+                              </a>
+                         </div>
+                        </div>
+                        <div class="row">
+                          <ul class="profile-list">
+                            <li><span class="col-xs-5">Business Name  </span><span  class="col-xs-7">{{user.businessname}}</span></li>
+                            <li><span class="col-xs-5">Industry  </span><span  class="col-xs-7">{{user.industry}}</span></li>
+                            <li><span class="col-xs-5">City , Country</span><span  class="col-xs-7">{{user.city}},{{user.country}}</span></li>
+                            <li><span class="col-xs-5">Phone  </span><span  class="col-xs-7">{{user.phone}}</span></li>
+                            <li><span class="col-xs-5">Email  </span><span  class="col-xs-7">{{user.email}}</span></li>
+                            <li><span class="col-xs-5">Website  
+                                </span><span  class="col-xs-7">
+                                  <a href="http://{{user.businessurl}}" target="_blank" > 
+                                    <div class="businessurlfont">{{user.businessurl}}</div>
+                                  </a>
+                                </span>
+                            </li>
+                            <li><span class="col-xs-5">Joined </span><span class="col-xs-7">{{ user.created | date: 'fullDate'   }}</span></li>
+                           
+                          </ul>
+                        </div>
+                        
+
+                    </div>
+                    <div class=" col-lg-9 col-md-9 col-xs-12 col-sm-9" data-ng-if="pctrl.editInfo === 1">
+                       
+                            <div class=" row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                   <h4 class="font-color "> 
+                                    <b><label ng-if="editName === 0" class="profile-edit-preview p-5">{{user.firstname}} {{user.lastname}} 
+                                    </label>
+                                    <label ng-if="editName === 0" class="zmdi zmdi-edit edit-pen-icon p-5" ng-click="openEdit('editName');"></label> 
+                                     <input  ng-if="editName === 1"  type="text" ng-model="user.firstname" class="profile-edit-preview-clicked" size="{{user.firstname.length}}" ng-value="user.firstname">
+                                    <input  ng-if="editName === 1"  type="text" ng-model="user.lastname" class="profile-edit-preview-clicked" size="{{user.lastname.length}}" ng-value="user.lastname">
+                                    <label ng-if="editName === 1" class="zmdi zmdi-edit edit-pen-icon-clicked"></label></b>
+                                   </h4>
+                                </div>
+                                
+                            </div>
+                            <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+                              
+                              <ul class="profile-list">
+                                <li >Business Name </li>
+                                <li >Industry </li>
+                                <li >City  </li>
+                                <li >Country </li>
+                                <li >Phone </li>
+                                <li >Email </li>
+                                <li >Website </li>
+                               
+                              </ul>
+                            </div>
+                            <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
+                              <ul class="profile-list">
+                                <li >
+                                  <label  ng-if="editBusinessname === 0" class="profile-edit-preview">{{user.businessname}}
+                                  </label> 
+                                  <label  ng-if="editBusinessname === 0" class="zmdi zmdi-edit edit-pen-icon p-5" ng-click="openEdit('editBusinessname');"></label>
+
+                                  <input  ng-if="editBusinessname === 1"  type="text" ng-model="user.businessname" class="profile-edit-preview-clicked" size ="{{user.businessname.length}}"  placeholder="Business Name">
+                                  <label ng-if="editBusinessname === 1" class="zmdi zmdi-edit edit-pen-icon-clicked p-5"></label>
+                               </li>
+                                <li > 
+                                   <label ng-if="editIndustry === 0" class="profile-edit-preview">{{user.industry}}</label> 
+                                  <label ng-if="editIndustry === 0" ng-click="openEdit('editIndustry');" class="zmdi zmdi-edit edit-pen-icon p-5"></label>
+                                   <!-- <input  ng-if="editIndustry === 1"  type="text" ng-model="user.industry" class="profile-edit-preview-clicked" size ="{{user.industry.length}}" placeholder="Industry"> -->
+                                    <select  ng-if="editIndustry === 1"   ng-model="user.industry" class="profile-edit-preview-clicked"  data-placeholder="Select an industry..." >
+                                          <option disabled selected value="">Select an industry...</option> 
+                                          <option value="Web Development">Web Development</option>
+                                          <option value="Photography">Photography</option>
+                                          <option value="Mobile Development">Mobile Development</option>
+                                    </select>
+                                  <label ng-if="editIndustry === 1" class="zmdi zmdi-edit edit-pen-icon-clicked p-5"></label>
+                              </li>
+                                <li>
+                                   <label ng-if="editCity === 0" class="profile-edit-preview"> {{user.city}} </label> 
+                                   <label ng-if="editCity === 0" ng-click="openEdit('editCity');"class="zmdi zmdi-edit edit-pen-icon p-5"></label>
+                                    <input  ng-if="editCity === 1" size ="{{user.city.length}}"  type="text" ng-model="user.city" class="profile-edit-preview-clicked" placeholder="City">
+                                    <label ng-if="editCity === 1" class="zmdi zmdi-edit edit-pen-icon-clicked p-5"></label>
+                                </li>
+                                <li> 
+                                  <label ng-if="editCountry === 0" class="profile-edit-preview">{{user.country}}</label> 
+                                  <label ng-if="editCountry === 0" ng-click="openEdit('editCountry');" class="zmdi zmdi-edit edit-pen-icon p-5"></label>
+                                  <!-- <input  ng-if="editCountry === 1"  size ="{{user.country.length}}"  type="text" ng-model="user.country" class="profile-edit-preview-clicked"  placeholder="Country"> -->
+                                  <select  ng-if="editCountry === 1"     ng-model="user.country" class="profile-edit-preview-clicked"  data-placeholder="Select a country..." >
+                                                                        <option disabled selected value="">Select a country...</option>
+                                                                        <option value="United States">United States</option>
+                                                                        <option value="United Kingdom">United Kingdom</option>
+                                                                        <option value="Afghanistan">Afghanistan</option>
+                                                                        <option value="Aland Islands">Aland Islands</option>
+                                                                        <option value="Albania">Albania</option>
+                                                                        <option value="Algeria">Algeria</option>
+                                                                        <option value="American Samoa">American Samoa</option>
+                                                                        <option value="Andorra">Andorra</option>
+                                                                        <option value="Angola">Angola</option>
+                                                                        <option value="Anguilla">Anguilla</option>
+                                                                        <option value="Antarctica">Antarctica</option>
+                                                                        <option value="Antigua and Barbuda">Antigua and Barbuda</option>
+                                                                        <option value="Argentina">Argentina</option>
+                                                                        <option value="Armenia">Armenia</option>
+                                                                        <option value="Aruba">Aruba</option>
+                                                                        <option value="Australia">Australia</option>
+                                                                        <option value="Austria">Austria</option>
+                                                                        <option value="Azerbaijan">Azerbaijan</option>
+                                                                        <option value="Bahamas">Bahamas</option>
+                                                                        <option value="Bahrain">Bahrain</option>
+                                                                        <option value="Bangladesh">Bangladesh</option>
+                                                                        <option value="Barbados">Barbados</option>
+                                                                        <option value="Belarus">Belarus</option>
+                                                                        <option value="Belgium">Belgium</option>
+                                                                        <option value="Belize">Belize</option>
+                                                                        <option value="Benin">Benin</option>
+                                                                        <option value="Bermuda">Bermuda</option>
+                                                                        <option value="Bhutan">Bhutan</option>
+                                                                        <option value="Bolivia, Plurinational State of">Bolivia, Plurinational State of</option>
+                                                                        <option value="Bonaire, Sint Eustatius and Saba">Bonaire, Sint Eustatius and Saba</option>
+                                                                        <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
+                                                                        <option value="Botswana">Botswana</option>
+                                                                        <option value="Bouvet Island">Bouvet Island</option>
+                                                                        <option value="Brazil">Brazil</option>
+                                                                        <option value="British Indian Ocean Territory">British Indian Ocean Territory</option>
+                                                                        <option value="Brunei Darussalam">Brunei Darussalam</option>
+                                                                        <option value="Bulgaria">Bulgaria</option>
+                                                                        <option value="Burkina Faso">Burkina Faso</option>
+                                                                        <option value="Burundi">Burundi</option>
+                                                                        <option value="Cambodia">Cambodia</option>
+                                                                        <option value="Cameroon">Cameroon</option>
+                                                                        <option value="Canada">Canada</option>
+                                                                        <option value="Cape Verde">Cape Verde</option>
+                                                                        <option value="Cayman Islands">Cayman Islands</option>
+                                                                        <option value="Central African Republic">Central African Republic</option>
+                                                                        <option value="Chad">Chad</option>
+                                                                        <option value="Chile">Chile</option>
+                                                                        <option value="China">China</option>
+                                                                        <option value="Christmas Island">Christmas Island</option>
+                                                                        <option value="Cocos (Keeling) Islands">Cocos (Keeling) Islands</option>
+                                                                        <option value="Colombia">Colombia</option>
+                                                                        <option value="Comoros">Comoros</option>
+                                                                        <option value="Congo">Congo</option>
+                                                                        <option value="Congo, The Democratic Republic of The">Congo, The Democratic Republic of The</option>
+                                                                        <option value="Cook Islands">Cook Islands</option>
+                                                                        <option value="Costa Rica">Costa Rica</option>
+                                                                        <option value="Cote D'ivoire">Cote D'ivoire</option>
+                                                                        <option value="Croatia">Croatia</option>
+                                                                        <option value="Cuba">Cuba</option>
+                                                                        <option value="Curacao">Curacao</option>
+                                                                        <option value="Cyprus">Cyprus</option>
+                                                                        <option value="Czech Republic">Czech Republic</option>
+                                                                        <option value="Denmark">Denmark</option>
+                                                                        <option value="Djibouti">Djibouti</option>
+                                                                        <option value="Dominica">Dominica</option>
+                                                                        <option value="Dominican Republic">Dominican Republic</option>
+                                                                        <option value="Ecuador">Ecuador</option>
+                                                                        <option value="Egypt">Egypt</option>
+                                                                        <option value="El Salvador">El Salvador</option>
+                                                                        <option value="Equatorial Guinea">Equatorial Guinea</option>
+                                                                        <option value="Eritrea">Eritrea</option>
+                                                                        <option value="Estonia">Estonia</option>
+                                                                        <option value="Ethiopia">Ethiopia</option>
+                                                                        <option value="Falkland Islands (Malvinas)">Falkland Islands (Malvinas)</option>
+                                                                        <option value="Faroe Islands">Faroe Islands</option>
+                                                                        <option value="Fiji">Fiji</option>
+                                                                        <option value="Finland">Finland</option>
+                                                                        <option value="France">France</option>
+                                                                        <option value="French Guiana">French Guiana</option>
+                                                                        <option value="French Polynesia">French Polynesia</option>
+                                                                        <option value="French Southern Territories">French Southern Territories</option>
+                                                                        <option value="Gabon">Gabon</option>
+                                                                        <option value="Gambia">Gambia</option>
+                                                                        <option value="Georgia">Georgia</option>
+                                                                        <option value="Germany">Germany</option>
+                                                                        <option value="Ghana">Ghana</option>
+                                                                        <option value="Gibraltar">Gibraltar</option>
+                                                                        <option value="Greece">Greece</option>
+                                                                        <option value="Greenland">Greenland</option>
+                                                                        <option value="Grenada">Grenada</option>
+                                                                        <option value="Guadeloupe">Guadeloupe</option>
+                                                                        <option value="Guam">Guam</option>
+                                                                        <option value="Guatemala">Guatemala</option>
+                                                                        <option value="Guernsey">Guernsey</option>
+                                                                        <option value="Guinea">Guinea</option>
+                                                                        <option value="Guinea-bissau">Guinea-bissau</option>
+                                                                        <option value="Guyana">Guyana</option>
+                                                                        <option value="Haiti">Haiti</option>
+                                                                        <option value="Heard Island and Mcdonald Islands">Heard Island and Mcdonald Islands</option>
+                                                                        <option value="Holy See (Vatican City State)">Holy See (Vatican City State)</option>
+                                                                        <option value="Honduras">Honduras</option>
+                                                                        <option value="Hong Kong">Hong Kong</option>
+                                                                        <option value="Hungary">Hungary</option>
+                                                                        <option value="Iceland">Iceland</option>
+                                                                        <option value="India">India</option>
+                                                                        <option value="Indonesia">Indonesia</option>
+                                                                        <option value="Iran, Islamic Republic of">Iran, Islamic Republic of</option>
+                                                                        <option value="Iraq">Iraq</option>
+                                                                        <option value="Ireland">Ireland</option>
+                                                                        <option value="Isle of Man">Isle of Man</option>
+                                                                        <option value="Israel">Israel</option>
+                                                                        <option value="Italy">Italy</option>
+                                                                        <option value="Jamaica">Jamaica</option>
+                                                                        <option value="Japan">Japan</option>
+                                                                        <option value="Jersey">Jersey</option>
+                                                                        <option value="Jordan">Jordan</option>
+                                                                        <option value="Kazakhstan">Kazakhstan</option>
+                                                                        <option value="Kenya">Kenya</option>
+                                                                        <option value="Kiribati">Kiribati</option>
+                                                                        <option value="Korea, Democratic People's Republic of">Korea, Democratic People's Republic of</option>
+                                                                        <option value="Korea, Republic of">Korea, Republic of</option>
+                                                                        <option value="Kuwait">Kuwait</option>
+                                                                        <option value="Kyrgyzstan">Kyrgyzstan</option>
+                                                                        <option value="Lao People's Democratic Republic">Lao People's Democratic Republic</option>
+                                                                        <option value="Latvia">Latvia</option>
+                                                                        <option value="Lebanon">Lebanon</option>
+                                                                        <option value="Lesotho">Lesotho</option>
+                                                                        <option value="Liberia">Liberia</option>
+                                                                        <option value="Libya">Libya</option>
+                                                                        <option value="Liechtenstein">Liechtenstein</option>
+                                                                        <option value="Lithuania">Lithuania</option>
+                                                                        <option value="Luxembourg">Luxembourg</option>
+                                                                        <option value="Macao">Macao</option>
+                                                                        <option value="Macedonia, The Former Yugoslav Republic of">Macedonia, The Former Yugoslav Republic of</option>
+                                                                        <option value="Madagascar">Madagascar</option>
+                                                                        <option value="Malawi">Malawi</option>
+                                                                        <option value="Malaysia">Malaysia</option>
+                                                                        <option value="Maldives">Maldives</option>
+                                                                        <option value="Mali">Mali</option>
+                                                                        <option value="Malta">Malta</option>
+                                                                        <option value="Marshall Islands">Marshall Islands</option>
+                                                                        <option value="Martinique">Martinique</option>
+                                                                        <option value="Mauritania">Mauritania</option>
+                                                                        <option value="Mauritius">Mauritius</option>
+                                                                        <option value="Mayotte">Mayotte</option>
+                                                                        <option value="Mexico">Mexico</option>
+                                                                        <option value="Micronesia, Federated States of">Micronesia, Federated States of</option>
+                                                                        <option value="Moldova, Republic of">Moldova, Republic of</option>
+                                                                        <option value="Monaco">Monaco</option>
+                                                                        <option value="Mongolia">Mongolia</option>
+                                                                        <option value="Montenegro">Montenegro</option>
+                                                                        <option value="Montserrat">Montserrat</option>
+                                                                        <option value="Morocco">Morocco</option>
+                                                                        <option value="Mozambique">Mozambique</option>
+                                                                        <option value="Myanmar">Myanmar</option>
+                                                                        <option value="Namibia">Namibia</option>
+                                                                        <option value="Nauru">Nauru</option>
+                                                                        <option value="Nepal">Nepal</option>
+                                                                        <option value="Netherlands">Netherlands</option>
+                                                                        <option value="New Caledonia">New Caledonia</option>
+                                                                        <option value="New Zealand">New Zealand</option>
+                                                                        <option value="Nicaragua">Nicaragua</option>
+                                                                        <option value="Niger">Niger</option>
+                                                                        <option value="Nigeria">Nigeria</option>
+                                                                        <option value="Niue">Niue</option>
+                                                                        <option value="Norfolk Island">Norfolk Island</option>
+                                                                        <option value="Northern Mariana Islands">Northern Mariana Islands</option>
+                                                                        <option value="Norway">Norway</option>
+                                                                        <option value="Oman">Oman</option>
+                                                                        <option value="Pakistan">Pakistan</option>
+                                                                        <option value="Palau">Palau</option>
+                                                                        <option value="Palestinian Territory, Occupied">Palestinian Territory, Occupied</option>
+                                                                        <option value="Panama">Panama</option>
+                                                                        <option value="Papua New Guinea">Papua New Guinea</option>
+                                                                        <option value="Paraguay">Paraguay</option>
+                                                                        <option value="Peru">Peru</option>
+                                                                        <option value="Philippines">Philippines</option>
+                                                                        <option value="Pitcairn">Pitcairn</option>
+                                                                        <option value="Poland">Poland</option>
+                                                                        <option value="Portugal">Portugal</option>
+                                                                        <option value="Puerto Rico">Puerto Rico</option>
+                                                                        <option value="Qatar">Qatar</option>
+                                                                        <option value="Reunion">Reunion</option>
+                                                                        <option value="Romania">Romania</option>
+                                                                        <option value="Russian Federation">Russian Federation</option>
+                                                                        <option value="Rwanda">Rwanda</option>
+                                                                        <option value="Saint Barthelemy">Saint Barthelemy</option>
+                                                                        <option value="Saint Helena, Ascension and Tristan da Cunha">Saint Helena, Ascension and Tristan da Cunha</option>
+                                                                        <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
+                                                                        <option value="Saint Lucia">Saint Lucia</option>
+                                                                        <option value="Saint Martin (French part)">Saint Martin (French part)</option>
+                                                                        <option value="Saint Pierre and Miquelon">Saint Pierre and Miquelon</option>
+                                                                        <option value="Saint Vincent and The Grenadines">Saint Vincent and The Grenadines</option>
+                                                                        <option value="Samoa">Samoa</option>
+                                                                        <option value="San Marino">San Marino</option>
+                                                                        <option value="Sao Tome and Principe">Sao Tome and Principe</option>
+                                                                        <option value="Saudi Arabia">Saudi Arabia</option>
+                                                                        <option value="Senegal">Senegal</option>
+                                                                        <option value="Serbia">Serbia</option>
+                                                                        <option value="Seychelles">Seychelles</option>
+                                                                        <option value="Sierra Leone">Sierra Leone</option>
+                                                                        <option value="Singapore">Singapore</option>
+                                                                        <option value="Sint Maarten (Dutch part)">Sint Maarten (Dutch part)</option>
+                                                                        <option value="Slovakia">Slovakia</option>
+                                                                        <option value="Slovenia">Slovenia</option>
+                                                                        <option value="Solomon Islands">Solomon Islands</option>
+                                                                        <option value="Somalia">Somalia</option>
+                                                                        <option value="South Africa">South Africa</option>
+                                                                        <option value="South Georgia and The South Sandwich Islands">South Georgia and The South Sandwich Islands</option>
+                                                                        <option value="South Sudan">South Sudan</option>
+                                                                        <option value="Spain">Spain</option>
+                                                                        <option value="Sri Lanka">Sri Lanka</option>
+                                                                        <option value="Sudan">Sudan</option>
+                                                                        <option value="Suriname">Suriname</option>
+                                                                        <option value="Svalbard and Jan Mayen">Svalbard and Jan Mayen</option>
+                                                                        <option value="Swaziland">Swaziland</option>
+                                                                        <option value="Sweden">Sweden</option>
+                                                                        <option value="Switzerland">Switzerland</option>
+                                                                        <option value="Syrian Arab Republic">Syrian Arab Republic</option>
+                                                                        <option value="Taiwan, Province of China">Taiwan, Province of China</option>
+                                                                        <option value="Tajikistan">Tajikistan</option>
+                                                                        <option value="Tanzania, United Republic of">Tanzania, United Republic of</option>
+                                                                        <option value="Thailand">Thailand</option>
+                                                                        <option value="Timor-leste">Timor-leste</option>
+                                                                        <option value="Togo">Togo</option>
+                                                                        <option value="Tokelau">Tokelau</option>
+                                                                        <option value="Tonga">Tonga</option>
+                                                                        <option value="Trinidad and Tobago">Trinidad and Tobago</option>
+                                                                        <option value="Tunisia">Tunisia</option>
+                                                                        <option value="Turkey">Turkey</option>
+                                                                        <option value="Turkmenistan">Turkmenistan</option>
+                                                                        <option value="Turks and Caicos Islands">Turks and Caicos Islands</option>
+                                                                        <option value="Tuvalu">Tuvalu</option>
+                                                                        <option value="Uganda">Uganda</option>
+                                                                        <option value="Ukraine">Ukraine</option>
+                                                                        <option value="United Arab Emirates">United Arab Emirates</option>
+                                                                        <option value="United Kingdom">United Kingdom</option>
+                                                                        <option value="United States">United States</option>
+                                                                        <option value="United States Minor Outlying Islands">United States Minor Outlying Islands</option>
+                                                                        <option value="Uruguay">Uruguay</option>
+                                                                        <option value="Uzbekistan">Uzbekistan</option>
+                                                                        <option value="Vanuatu">Vanuatu</option>
+                                                                        <option value="Venezuela, Bolivarian Republic of">Venezuela, Bolivarian Republic of</option>
+                                                                        <option value="Viet Nam">Viet Nam</option>
+                                                                        <option value="Virgin Islands, British">Virgin Islands, British</option>
+                                                                        <option value="Virgin Islands, U.S.">Virgin Islands, U.S.</option>
+                                                                        <option value="Wallis and Futuna">Wallis and Futuna</option>
+                                                                        <option value="Western Sahara">Western Sahara</option>
+                                                                        <option value="Yemen">Yemen</option>
+                                                                        <option value="Zambia">Zambia</option>
+                                                                        <option value="Zimbabwe">Zimbabwe</option>
+                                  </select>
+                                  <label ng-if="editCountry === 1" class="zmdi zmdi-edit edit-pen-icon-clicked p-5"></label>
+                                </li>
+                                <li >
+                                  <label ng-if="editPhone === 0" ng-if="user.phone" class="profile-edit-preview">{{user.phone}}</label> 
+                                  <!-- <label ng-if="editPhone === 0" ng-if="!user.phone" class="profile-edit-preview">Phone</label> --> 
+                                  <label ng-if="editPhone === 0" ng-click="openEdit('editPhone');" class="zmdi zmdi-edit edit-pen-icon p-5"></label>
+                                  <input  ng-if="editPhone === 1"  size ="{{user.phone.length}}"  type="text" ng-model="user.phone" class="profile-edit-preview-clicked" placeholder="Phone">
+                                  <label ng-if="editPhone === 1" class="zmdi zmdi-edit edit-pen-icon-clicked p-5">
+                                </li>
+                                <li> 
+                                  <label ng-if="editEmail === 0"  class="profile-edit-preview">{{user.email}}</label> 
+                                 
+                                  <label ng-if="editEmail === 0" ng-click="openEdit('editEmail');" class="zmdi zmdi-edit edit-pen-icon p-5"></label>
+                                  <input  ng-if="editEmail === 1"  size ="{{user.email.length}}"  type="text" ng-model="user.email" class="profile-edit-preview-clicked" placeholder="Email">
+                                  <label ng-if="editEmail === 1" class="zmdi zmdi-edit edit-pen-icon-clicked p-5">
+                                </li>
+                                <li> 
+                                   
+                                <label ng-if="editBusinessurl === 0" class="profile-edit-preview businessurlfont">
+                                     {{user.businessurl}}
+                                </label> 
+                                <label  ng-if="editBusinessurl === 0"  ng-click="openEdit('editBusinessurl');" class="zmdi zmdi-edit edit-pen-icon p-5"></label>
+                                <input onchange="angular.element(this).scope().GenerateBusinessContent(this.value)"  ng-if="editBusinessurl === 1" size="{{user.businessurl.length}}"  type="text" ng-model="user.businessurl" class="profile-edit-preview-clicked" placeholder="Business URL">
+                                <label ng-if="editBusinessurl === 1" class="zmdi zmdi-edit edit-pen-icon-clicked p-5">
+
+                                </li>
+                                
+                              </ul>
+                             <!--   <div class="m-t-30"> -->
+                                 
+                                  <!-- <button class="btn btn-link btn-sm" data-ng-click="pctrl.editInfo = 0" >Cancel</button> -->
+                              <!-- </div> -->
+                            </div>
+                    </div>
+                  </div>
+                 <div class="row profile-footer" >{{user.links[3].link}}   
+                  <a data-ng-if="userislogged === 0" data-ng-click="pctrl.editInfo  = 1"><i class="zmdi zmdi-settings graythemeColor" ></i></a>
+                 </div>
+=======
+  <div class="block-header" ></div>
+  <div class="row" >
+    <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 ">
+      <div class="card" >
+        <form data-ng-submit="pctrl.submit('profileInfo', 'Profile Information')" >
+          <div class="card-header  p-0" >
+            <div class="col-md-12 text-right" data-ng-if="pctrl.editInfo === 1">
+              <button  class="btn bgm-gray btn-primary btn-sm" type="submit">Close Edit </button>   
+>>>>>>> 06f7a8418a0b160359fef6df88a110c6d5f27e87
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row p-10">
+              <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3 hidden-xs" >
+                <img  ng-if="user.image === 'NAN'"class="img-responsive profilepic"  src="img/contacts/male.png">
+                <img ng-if="user.image !== 'NAN'" class="img-responsive profilepic"  src="{{user.image}}" >
+                <div class="profile-change-photo" data-ng-if="pctrl.editInfo === 1">
+        <form >
+        <input type="file"   file-model="myFile"  onchange="angular.element(this).scope().fileNameChanged(this , 'profile')" class=" zmdi zmdi-camera-add zmdi-hc-fw font-cust m-r-5 p-t-5  col-md-1 col-lg-1 col-sm-1 col-xs-2 p-r-30 input-customize"/> 
+        </form>
+        <h5 class="white-color m-t-15"> Change Photo</h5>
+        </div>
+        </div>
+        <div class=" col-lg-9 col-md-9 col-xs-12 col-sm-9" data-ng-if="pctrl.editInfo === 0">
+        <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+        <h4 class="font-color font-size-28"> 
+        <b><label>{{user.firstname}} {{user.lastname}} </label>        </b>
+        </h4>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+        <div class="founder-label p-10 font-size-13 " tooltip="One of the first Cape 66° in my country">Founder Member
+        </div>
+        <a  data-ui-sref="pages.messages">
+        <i class="zmdi zmdi-email zmdi-hc-fw message-icon" ></i>
+        </a>
+        </div>
+        </div>
+        <div class="row m-t--15">
+        <ul class="profile-list">
+        <li><span class="col-xs-3">Business Name  </span><span  class="col-xs-7">{{user.businessname}}</span></li>
+        <li><span class="col-xs-3">Industry  </span><span  class="col-xs-7">{{user.industry}}</span></li>
+        <li><span class="col-xs-3">City , Country</span><span  class="col-xs-7">{{user.city}},{{user.country}}</span></li>
+        <li><span class="col-xs-3">Phone  </span><span  class="col-xs-7">{{user.phone}}</span></li>
+        <li><span class="col-xs-3">Email  </span><span  class="col-xs-7">{{user.email}}</span></li>
+        <li><span class="col-xs-3">Website  
+        </span><span  class="col-xs-7">
+        <a href="{{user.businessurl}}" target="_blank" > 
+        <div class="businessurlfont">{{user.businessurl}}</div>
+        </a>
+        </span>
+        </li>
+        <li><span class="col-xs-3">Joined </span><span class="col-xs-7">{{ user.created | date: 'fullDate'   }}</span></li>
+        </ul>
+        </div>
+        </div>
+        <div class=" col-lg-9 col-md-9 col-xs-12 col-sm-9" data-ng-if="pctrl.editInfo === 1">
+        <div class=" row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h4 class="font-color "> 
+        <b><label ng-if="editName === 0" class="profile-edit-preview p-5">{{user.firstname}} {{user.lastname}} 
+        </label>
+        <label ng-if="editName === 0" class="zmdi zmdi-edit edit-pen-icon p-5" ng-click="openEdit('editName');"></label> 
+        <input  ng-if="editName === 1"  type="text" ng-model="user.firstname" class="profile-edit-preview-clicked" size="{{user.firstname.length}}" ng-value="user.firstname">
+        <input  ng-if="editName === 1"  type="text" ng-model="user.lastname" class="profile-edit-preview-clicked" size="{{user.lastname.length}}" ng-value="user.lastname">
+        <label ng-if="editName === 1" class="zmdi zmdi-edit edit-pen-icon-clicked"></label></b>
+        </h4>
+        </div>
+        </div>
+        <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+        <ul class="profile-list">
+        <li >Business Name </li>
+        <li >Industry </li>
+        <li >City  </li>
+        <li >Country </li>
+        <li >Phone </li>
+        <li >Email </li>
+        <li >Website </li>
+        </ul>
+        </div>
+        <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
+        <ul class="profile-list">
+        <li >
+        <label  ng-if="editBusinessname === 0" class="profile-edit-preview">{{user.businessname}}
+        </label> 
+        <label  ng-if="editBusinessname === 0" class="zmdi zmdi-edit edit-pen-icon p-5" ng-click="openEdit('editBusinessname');"></label>
+        <input  ng-if="editBusinessname === 1"  type="text" ng-model="user.businessname" class="profile-edit-preview-clicked" size ="{{user.businessname.length}}"  placeholder="Business Name">
+        <label ng-if="editBusinessname === 1" class="zmdi zmdi-edit edit-pen-icon-clicked p-5"></label>
+        </li>
+        <li > 
+        <label ng-if="editIndustry === 0" class="profile-edit-preview">{{user.industry}}</label> 
+        <label ng-if="editIndustry === 0" ng-click="openEdit('editIndustry');" class="zmdi zmdi-edit edit-pen-icon p-5"></label>
+        <input  ng-if="editIndustry === 1"  type="text" ng-model="user.industry" class="profile-edit-preview-clicked" size ="{{user.industry.length}}" placeholder="Industry">
+        <label ng-if="editIndustry === 1" class="zmdi zmdi-edit edit-pen-icon-clicked p-5"></label>
+        </li>
+        <li>
+        <label ng-if="editCity === 0" class="profile-edit-preview"> {{user.city}} </label> 
+        <label ng-if="editCity === 0" ng-click="openEdit('editCity');"class="zmdi zmdi-edit edit-pen-icon p-5"></label>
+        <input  ng-if="editCity === 1" size ="{{user.city.length}}"  type="text" ng-model="user.city" class="profile-edit-preview-clicked" placeholder="City">
+        <label ng-if="editCity === 1" class="zmdi zmdi-edit edit-pen-icon-clicked p-5"></label>
+        </li>
+        <li> 
+        <label ng-if="editCountry === 0" class="profile-edit-preview">{{user.country}}</label> 
+        <label ng-if="editCountry === 0" ng-click="openEdit('editCountry');" class="zmdi zmdi-edit edit-pen-icon p-5"></label>
+        <input  ng-if="editCountry === 1"  size ="{{user.country.length}}"  type="text" ng-model="user.country" class="profile-edit-preview-clicked" placeholder="Country">
+        <label ng-if="editCountry === 1" class="zmdi zmdi-edit edit-pen-icon-clicked p-5"></label>
+        </li>
+        <li >
+        <label ng-if="editPhone === 0" ng-if="user.phone" class="profile-edit-preview">{{user.phone}}</label> 
+        <!-- <label ng-if="editPhone === 0" ng-if="!user.phone" class="profile-edit-preview">Phone</label> --> 
+        <label ng-if="editPhone === 0" ng-click="openEdit('editPhone');" class="zmdi zmdi-edit edit-pen-icon p-5"></label>
+        <input  ng-if="editPhone === 1"  size ="{{user.phone.length}}"  type="text" ng-model="user.phone" class="profile-edit-preview-clicked" placeholder="Phone">
+        <label ng-if="editPhone === 1" class="zmdi zmdi-edit edit-pen-icon-clicked p-5">
+        </li>
+        <li> 
+        <label ng-if="editEmail === 0"  class="profile-edit-preview">{{user.email}}</label> 
+        <label ng-if="editEmail === 0" ng-click="openEdit('editEmail');" class="zmdi zmdi-edit edit-pen-icon p-5"></label>
+        <input  ng-if="editEmail === 1"  size ="{{user.email.length}}"  type="text" ng-model="user.email" class="profile-edit-preview-clicked" placeholder="Email">
+        <label ng-if="editEmail === 1" class="zmdi zmdi-edit edit-pen-icon-clicked p-5">
+        </li>
+        <li> 
+        <label ng-if="editBusinessurl === 0" class="profile-edit-preview businessurlfont">
+        {{user.businessurl}}
+        </label> 
+        <label  ng-if="editBusinessurl === 0"  ng-click="openEdit('editBusinessurl');" class="zmdi zmdi-edit edit-pen-icon p-5"></label>
+        <input onchange="angular.element(this).scope().GenerateBusinessContent(this.value)"  ng-if="editBusinessurl === 1" size="{{user.businessurl.length}}"  type="text" ng-model="user.businessurl" class="profile-edit-preview-clicked" placeholder="Business URL">
+        <label ng-if="editBusinessurl === 1" class="zmdi zmdi-edit edit-pen-icon-clicked p-5">
+        </li>
+        </ul>
+        <!--   <div class="m-t-30"> -->
+        <!-- <button class="btn btn-link btn-sm" data-ng-click="pctrl.editInfo = 0" >Cancel</button> -->
+        <!-- </div> -->
+        </div>
+        </div>
+        </div>
+        <div class="row profile-footer" >{{user.links[3].link}}   
+        <a data-ng-if="userislogged === 0" data-ng-click="pctrl.editInfo  = 1"><i class="zmdi zmdi-settings graythemeColor" ></i></a>
+        </div>
+        </div>
+      </div>
+      <h4 class="graythemeColor bold-800 font-size-21 m-l-10">Business Overview</h4>
+      <div class="card weclomepost  " >
+        <div class="dashed-border-red">
+          <div class="media p-b-15">
+            <div class=" col-lg-12 col-md-12 col-xs-12 col-sm-12 profile-welcome-padding">
+              <span class="font-size-21 font-color"> <b> {{user.businessname}} -  {{user.industry}} </b> <br></span>
+              <a href="http://{{user.businessurl}}" target="_blank" >
+              <span class="bluish"> {{user.businessurl}} </span> 
+              </a>    
+              <p ng-if="pctrl.editInfo === 0"  class="text-justify m-t-20 " >{{user.businessoverview}} </p>
+              <p  ng-if="editOverview === 0 && pctrl.editInfo === 1" class="text-justify profile-edit-preview" >
+                <i  ng-if="editOverview === 0 && pctrl.editInfo === 1"class="zmdi zmdi-edit  pull-right"  ng-click="openEdit('editOverview');" ></i>    
+                {{user.businessoverview}} 
+              </p>
+              <textarea  ng-if="editOverview === 1 && pctrl.editInfo === 1" ng-model="user.businessoverview" rows="10" class="w-100">{{user.businessoverview}}</textarea>
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12  p-8">
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 logoborder">
+                <input ng-if="pctrl.editInfo === 1"  type="file"   file-model="myFilelogo"  onchange="angular.element(this).scope().fileNameChanged(this , 'logo')" class="upload-icon-profile-register zmdi zmdi-camera-add zmdi-hc-fw font-cust m-r-5 p-t-5 p-r-30  col-md-1 col-lg-1 col-sm-1 col-xs-2 input-customize"/> 
+                <img src="{{user.logourl}}" class="center-me img-responsive hidden-sm hidden-xs " >
+              </div>
+            </div>
+          </div>
+<<<<<<< HEAD
+           </form>
+          <h4   data-ng-if="newpost.type === 'a' || newpost.type === 'sr' || newpost.type === 'pi'"   class="graythemeColor bold-800">Latest Request</h4>
+          <div class="card" data-ng-controller="newsfeedCtrl as newctrl"  data-ng-if="newpost.type === 'sr'"  >
+               <div class="card-header p-10" >
+                   
+                    <div class="media">
+                    
+                        <div class="pull-left">
+                          <img ng-if="user.image === 'NAN'"   src="img/contacts/male.png" alt="" class="postImage">
+                          <img ng-if="user.image !== 'NAN'"   src="{{user.image}}" class="postImage">
+                        </div>
+                        <div class="media-body ">
+                            <h4> <b> <a data-ui-sref="pages.viewprofile.viewprofile-timeline"> {{user.firstname}} {{user.lastname}}  </a></b> <br> <small><a  target="_blank" href="http://{{user.businessurl}}"> {{user.businessname}} </a> - {{user.industry}} , {{user.country}}</small></h4>
+                           
+                            
+                       </div>
+                    </div>
+                     <ul class="actions"  data-ng-if="user.id === User.id">
+                          <li class="dropdown" dropdown="">
+                              <a href="" dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
+                                  <i class="zmdi zmdi-more-vert"></i>
+                              </a>
+              
+                              <ul class="dropdown-menu dropdown-menu-right">
+                                  <li>
+                                      <a  href="">Edit</a>
+                                  </li>
+                                  <li>
+                                      <a  ng-click="DeleteModal(newpost.id)" href="" >Delete</a>
+                                  </li>
+                              </ul>
+                          </li>
+                    </ul>
+=======
+          <ul class="wall-attrs clearfix list-inline list-unstyled card-padding">
+              <li class="wa-users">
+              <div  class="btn-colors btn-demo" >
+                <div class="row p-r-15">
+                  <span style="color:rgba(119, 119, 119, 0.76);">Support this entreprenuer</span>
+                  <button data-ng-click= "shareClick(newpost.id);" id="share{{newpost.id}}"   class="btn bgm-blue m-0"  > Share 
+                  <i class="zmdi zmdi-share zmdi-hc-fw font-size-zmd"></i>
+                  </button>
+>>>>>>> 06f7a8418a0b160359fef6df88a110c6d5f27e87
+                </div>
+                <div class="row pull-right p-r-20 ">
+                  <ul  id="list{{newpost.id}}"  class="shareList" style="display:none;" >
+                    <li class="col-sm-12 emailshare p-0">
+                      <div class="col-sm-4 p-5 m-0 boder-right-separator">
+                        <i class="zmdi zmdi-email zmdi-hc-fw"></i>
+                      </div>
+                      <div class="col-sm-8 p-5 m-0">Email</div>
+                    </li>
+                    <li class="col-sm-12 facebookshare p-0">
+                      <div class="col-sm-4 p-5 m-0 boder-right-separator">
+                        <i class="zmdi zmdi-facebook zmdi-hc-fw"></i>
+                      </div>
+                      <div class="col-sm-8 p-5 m-0">Facebook</div>
+                    </li>
+                    <li class="col-sm-12 twittershare p-0">
+                      <div class="col-sm-4 p-5 m-0 boder-right-separator">
+                        <i class="zmdi zmdi-twitter zmdi-hc-fw"></i>
+                      </div>
+                      <div class="col-sm-8 p-5 m-0">Twitter</div>
+                    </li>
+                    <li class="col-sm-12 linkedinshare p-0">
+                      <div class="col-sm-4 p-5 m-0 boder-right-separator">
+                        <i class="zmdi zmdi-linkedin-box zmdi-hc-fw"></i>
+                      </div>
+                      <div class="col-sm-8 p-5 m-0">LinkedIn</div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <div class="wall-comment-list" >
+            <div class="wcl-form">
+              <div class="wc-comment bgm-white p-10 m-b-5" data-ng-if="newctrl.detailsCommenting[newpost.id]">
+                <form data-ng-submit="pctrl.submit('profileName', 'Profile Name')"  class="w-100">
+                  <h5>Send the Details of {{user.businessname}} to</h5>
+                  <div class="row emailpreview m-b-10 p-10">
+                    <div class="ccol-sm-12 col-lg-12 col-md-12 col-xs-12 m-b-0 ">
+                      <div class="form-group">
+                        <div class="fg-line">
+                          <input  type="email" ng-model="email" class="form-control" placeholder="Email">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12">
+                      <div class="form-group">
+                        <div class="fg-line">
+                          <textarea  ng-model="message" class="form-control" rows="5" data-auto-size placeholder="Message (optional)......"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row p-5 emailpreview">
+                    <p class="font-color">Subject: “ From {{User.firstname}} {{User.lastname}} through Reciprocas  </p>
+                    <p class="font-color"> I came across this business on Reciprocās and through it would be interest you <br> {{User.firstname}} {{User.lastname}} </p>
+                    <p>+Personal message (optional)</p>
+                    <p>{{message}}</p>
+                  </div>
+                  <div class="row m-l-0 m-r-0">
+                    <div class="m-t-15 col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                      <div>
+                        <span class="pull-left m-r-25">An email will be sent to your contact copying {{User.firstname}}. Thank you
+                        </span>
+                        <button ng-click="showFunchion(newpost.id,newpost.type,newpost.user.id ,email,message,'','','','');showReplyfunction()"  class="btn bgm-black waves-effect btn-sm btn-primary">Send</button>
+                        <button class="btn bgm-black waves-effect btn-sm btn-link c-white btn-margin-in-wall " data-ng-click="newctrl.detailsCommenting[newpost.id] = false">Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div ng-controller='temp' class="wc-comment bgm-white p-10 m-b-5" data-ng-if="newctrl.shareCommenting[newpost.id]">
+                <form  class="w-100">
+                  <h5>You can share using :</h5>
+                  <ul class="wall-attrs clearfix list-inline list-unstyled">
+                    <li  class="wa-stats" tooltip="Facebook">
+                      <span><i facebookg  class="zmdi  zmdi-facebook-box font-size-zmd font-width-zmd"  data-url='{{url}}'  data-callback='callback'></i> {{ shares }}</span>
+                    </li>
+                    <li class="wa-stats" tooltip="Twitter">
+                      <span><i twitterr data-url='{{url}}'  data-size="medium" data-text='{{text}}' class="zmdi zmdi-share zmdi-twitter-box font-size-zmd font-width-zmd"></i></span>
+                    </li>
+                    <li class="wa-stats" tooltip="Linkedin">
+                      <span><i linkedinn  data-url='{{url}}' data-title='{{title}}' data-summary="{{text}}"  class="zmdi zmdi-linkedin-box zmdi-hc-fw font-size-zmd font-width-zmd"></i> {{linkedinshares}}</span>
+                    </li>
+                  </ul>
+                  <div class="row m-l-0 m-r-0">
+                    <div class="m-t-15 col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                      <div>
+                        <button class="btn bgm-black waves-effect btn-sm btn-link c-white btn-margin-in-wall " data-ng-click="newctrl.shareCommenting[newpost.id] = false">Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </form>
+      <h4 data-ng-controller="newsfeedCtrl as newctrl"  data-ng-if="newpost.type === 'a' || newpost.type === 'sr' || newpost.type === 'pi'"   class="graythemeColor bold-800 font-size-21 m-l-10">Latest Request</h4>
+      <div class="card" data-ng-controller="newsfeedCtrl as newctrl"  data-ng-if="newpost.type === 'sr'"  >
+        <div class="card-header p-10" >
+          <div class="media">
+            <div class="pull-left">
+              <img ng-if="user.image === 'NAN'"   src="img/contacts/male.png" alt="" class="postImage">
+              <img ng-if="user.image !== 'NAN'"   src="{{user.image}}" class="postImage">
+            </div>
+            <div class="media-body ">
+              <h4> <b> <a data-ui-sref="pages.viewprofile.viewprofile-timeline"> {{user.firstname}} {{user.lastname}}  </a></b> <br> <small><a  target="_blank" href="#"> {{user.businessname}} </a> - {{user.industry}} , {{user.country}}</small></h4>
+            </div>
+          </div>
+          <ul class="actions"  data-ng-if="user.id === User.id">
+            <li class="dropdown" dropdown="">
+              <a href="" dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
+              <i class="zmdi zmdi-more-vert"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <li>
+                  <a  href="">Edit</a>
+                </li>
+                <li>
+                  <a  ng-click="DeleteModal(newpost.id)" href="" >Delete</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body card-padding" >
+          <h5>{{newpost.message}}</h5>
+          <div class="wall-img-preview lightbox clearfix"  data-ng-if="newpost.url!== NULL">
+            <img src="{{newpost.url}}" class="img-responsive center-me">
+          </div>
+          <ul class="wall-attrs clearfix list-inline list-unstyled">
+            <li class="wa-users">
+              <div class="btn-colors btn-demo" data-ng-if="!newctrl.wallCommenting[newpost.id]" data-ng-click="newctrl.wallCommenting[newpost.id] = true">
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="wall-comment-list" data-ng-if="newpost.type==='sr'">
+          <div class="wcl-list m-t-10 p-10" data-ng-if="newpost.replies.length !== 0  ">
+            <div class="media" ng-repeat="replies in newpost.replies"  data-ng-if="replies.is_private === '0' ; ">
+              <a ui-sref="pages.profile({userid: replies.user.id})" class="pull-left">
+              <img ng-if="replies.user.image === 'NAN'"   src="img/contacts/male.png" class="lv-img-sm">
+              <img ng-if="replies.user.image !== 'NAN'"    src="{{replies.user.image}}" class="lv-img-sm">
+              </a>
+              <div class="media-body">
+                <a data-ui-sref="pages.profile({userid: replies.user.id})" class="a-title">{{replies.user.firstname}} {{replies.user.lastname}} - </a> <a target="_blank" href="#">{{ replies.user.businessname }}</a> <br><small>{{ replies.user.industry }} - {{ replies.user.city }},{{ replies.user.country }}</small>
+                <p class="m-t-5 m-b-0">Recommended {{replies.message}} </p>
+              </div>
+              <ul class="actions">
+                <li class="dropdown" dropdown="">
+                  <a href="" dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
+                  <i class="zmdi zmdi-more-vert"></i>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                      <a href="">Report</a>
+                    </li>
+                    <li>
+                      <a ng-click="DeleteModal(newpost.id)" href="">Delete</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-ng-controller="newsfeedCtrl as newctrl"  data-ng-if="newpost.type==='pi'" >
+        <div class="card-header p-10" >
+          <div class="media">
+            <div class="pull-left">
+              <img ng-if="user.image === 'NAN'"   src="img/contacts/male.png" alt="" class="postImage">
+              <img ng-if="user.image !== 'NAN'"   src="{{user.image}}" class="postImage">
+            </div>
+            <div class="media-body">
+              <h4> <b> <a data-ui-sref="pages.viewprofile.viewprofile-timeline"> {{user.firstname}} {{user.lastname}}  </a></b> <br> <small><a  target="_blank" href="#"> {{user.businessname}} </a> - {{user.industry}} , {{user.country}}</small></h4>
+            </div>
+          </div>
+          <ul class="actions"  data-ng-if="user.id === User.id">
+            <li class="dropdown" dropdown="">
+              <a href="" dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
+              <i class="zmdi zmdi-more-vert"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <li>
+                  <a  href="">Edit</a>
+                </li>
+                <li>
+                  <a  ng-click="DeleteModal(newpost.id)" href="" >Delete</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body card-padding">
+          <h5 class="font-">{{newpost.message}}</h5>
+          <div class="wall-img-preview lightbox clearfix"  data-ng-if="newpost.url!== NULL">
+            <div class="wip-item" data-src="{{newpost.url}}" style="background-image: url({{newpost.url}});">
+              <div class="lightbox-item"></div>
+            </div>
+          </div>
+          <ul class="wall-attrs clearfix list-inline list-unstyled">
+            <li class="wa-users">
+              <div class="btn-colors btn-demo">
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="wall-comment-list"  >
+          <div class="wcl-list m-t-10 p-10" data-ng-if="newpost.replies.length !== 0">
+            <div class="media" ng-repeat="replies in newpost.replies" data-ng-if="replies.is_private === '0' ">
+              <a ui-sref="pages.profile({userid: replies.user.id})" class="pull-left">
+              <img ng-if="replies.user.image === 'NAN'"   src="img/contacts/male.png" class="lv-img-sm">
+              <img ng-if="replies.user.image !== 'NAN'"    src="{{replies.user.image}}" class="lv-img-sm">
+              </a>
+              <div class="media-body">
+                <a data-ui-sref="pages.profile({userid: replies.user.id})" class="a-title">{{replies.user.firstname}} {{replies.user.lastname}} - </a> <a target="_blank" href="#">{{ replies.user.businessname }}</a> <br><small>{{ replies.user.industry }} - {{ replies.user.city }},{{ replies.user.country }}</small>
+                <p class="m-t-5 m-b-0 text-justify">{{replies.message}}</p>
+              </div>
+              <ul class="actions">
+                <li class="dropdown" dropdown="">
+                  <a href="" dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
+                  <i class="zmdi zmdi-more-vert"></i>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                      <a href="">Report</a>
+                    </li>
+                    <li>
+                      <a href="">Delete</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-ng-controller="newsfeedCtrl as newctrl"  data-ng-if="newpost.type === 'a'">
+        <div class="card-header p-10" >
+          <div class="media">
+            <div class="pull-left">
+              <img ng-if="user.image === 'NAN'"   src="img/contacts/male.png" alt="" class="postImage">
+              <img ng-if="user.image !== 'NAN'"   src="{{user.image}}" class="postImage">
+            </div>
+            <div class="media-body">
+              <h4> <b> <a data-ui-sref="pages.viewprofile.viewprofile-timeline"> {{user.firstname}} {{user.lastname}}  </a></b> <br> <small><a  target="_blank" href="#"> {{user.businessname}} </a> - {{user.industry}} , {{user.country}}</small></h4>
+            </div>
+          </div>
+          <ul class="actions"  data-ng-if="newpost.user.id === User.id">
+            <li class="dropdown" dropdown="">
+              <a href="" dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
+              <i class="zmdi zmdi-more-vert"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <li>
+                  <a  href="">Edit</a>
+                </li>
+                <li>
+                  <a  ng-click="DeleteModal(newpost.id)" href="" >Delete</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body card-padding">
+          <h5 class="font-">{{newpost.message}}</h5>
+          <div class="wall-img-preview lightbox clearfix" data-ng-if="newpost.url!== NULL" >
+            <div class="wip-item"  data-src="{{newpost.url}}" style="background-image: url({{newpost.url}});">
+              <div class="lightbox-item"></div>
+            </div>
+          </div>
+          <ul class="wall-attrs clearfix list-inline list-unstyled">
+            <li class="wa-users">
+              <div class="btn-colors btn-demo">
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="wall-comment-list" data-ng-if="newpost.type==='a'">
+          <div class="wcl-list m-t-10 p-10" data-ng-if="newpost.replies.length !== 0">
+            <div class="media" ng-repeat="replies in newpost.replies" data-ng-if="replies.is_private === '0' ">
+              <a ui-sref="pages.profile({userid: replies.user.id})" class="pull-left">
+              <img ng-if="replies.user.image === 'NAN'"   src="img/contacts/male.png" class="lv-img-sm">
+              <img ng-if="replies.user.image !== 'NAN'"    src="{{replies.user.image}}" class="lv-img-sm">
+              </a>
+              <div class="media-body">
+                <a data-ui-sref="pages.profile({userid: replies.user.id})" class="a-title">{{replies.user.firstname}} {{replies.user.lastname}} - </a> <a target="_blank" href="#">{{ replies.user.businessname }}</a> <br><small>{{ replies.user.industry }} - {{ replies.user.city }},{{ replies.user.country }}</small>
+                <p class="m-t-5 m-b-0 text-justify">{{replies.message}}</p>
+              </div>
+              <ul class="actions">
+                <li class="dropdown" dropdown="">
+                  <a href="" dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
+                  <i class="zmdi zmdi-more-vert"></i>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                      <a href="">Report</a>
+                    </li>
+                    <li>
+                      <a href="">Delete</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-lg-4  hidden-sm hidden-xs ">
+      <div class="card" >
+        <div class="card-header leftsideheader p-10" >
+          <div class="media">
+            <div class="media-body m-t-5">
+              <b> Cape 66° points: </b> <b class="yellow-color">{{ user.points }}</b>
+            </div>
+          </div>
+        </div>
+        <div class="card-body card-padding"  data-ng-controller="teamCtrl">
+          <ul class="list-style-none p-0 m-0 p-t-10">
+            <li class="m-b-10">  Strengthened our network by: <span class="bold-800 font-black"> {{ user.invitations }} </span> entrepreneurs.
+            </li>
+            <li class="m-b-10"> Helped: <span class="bold-800 font-black"> {{ Ihelped_view.length }} </span>entrepreneurs.
+            </li>
+            <li class="m-b-10">  Received help from: <span class="bold-800 font-black"> {{ helped_me_view.length }} </span> entrepreneurs.
+            </li>
+          </ul>
+        </div>
+      </div>
+      <footer id="cape-footer" data-ng-include src="'template/cape-footer.html'"></footer>
+    </div>
+  </div>
+</div>

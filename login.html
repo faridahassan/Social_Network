@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+    <html class="login-content " data-ng-app="materialAdmin">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Cape 66° | Login</title>
+
+        <!-- Vendor CSS -->
+        <link href="vendors/bower_components/animate.css/animate.min.css" rel="stylesheet">
+        <link href="vendors/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css" rel="stylesheet">
+
+        <!-- CSS -->
+        <link href="css/app.min.1.css" rel="stylesheet">
+        <link href="css/app.min.2.css" rel="stylesheet">
+        <link href="css/app.min.3.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <header id="header" data-ng-include src="'template/header-customize.html'" data-ng-controller="headerCtrl as hctrl"></header>
+        <div class="container-fluid p-0 background-color-login"  data-ng-controller="loginCtrl as lctrl">
+
+            <div class="row login-content m-0 p-0">
+            <div class="container p-t-30">
+                <div class="col-md-5 col-lg-8 col-sm-10 col-md-offset-0 col-sm-offset-1  col-xs-10 col-xs-offset-1" >
+                        <h4>Our dream is to give every business-owner a supportive network of fellow entrepreneurs </h4>
+                        <h4>Cape 66° is going live in june 2016 </h4>
+                </div>
+                <!-- Registration -->
+                    <div class="lc-block col-md-3 col-lg-4 col-md-offset-0 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1"  data-ng-class="{ 'toggled': lctrl.login === 1 }" data-ng-if="lctrl.login === 1">
+                        <div class="m-b-0">
+                            <div class=" ch-alt m-0 p-0" >
+                               <h2>Join <img src="img/cape66.png" height="20px"/></h2> 
+                                <h4 class="font-">Global membership of Cape 66° is $12 </h4> 
+                                <h4 class="error"> {{notifyregistration}}</h4> 
+                            </div>
+                            <div class="card-body">
+                                <form name="userForm" ng-submit="register()">
+                                    <div class="form-group fg-float">
+                                        <div class="fg-line">
+                                            <input required="required" placeholder="First Name:" ng-model="user.firstname" type="text" class="form-control">
+                                        </div>
+                                        <!-- <label class="fg-label">First name</label> -->
+                                        <p ng-show="userForm.firstname.$error.required">Your First Name is required.</p>
+                                    </div>
+
+                                    <div class="form-group fg-float">
+                                        <div class="fg-line">
+                                            <input  required="required" placeholder="Last Name:"  ng-model="user.lastname" type="text" class="form-control ">
+                                        </div>
+                                        <!-- <label class="fg-label">Last name</label> -->
+                                        <p ng-show="userForm.lastname.$error.required">Your Last Name is required.</p>
+                                    </div>
+                                    <div class="form-group fg-float">
+                                        <div class="fg-line">
+                                            <input required="required" placeholder="Business Website:" ng-model="user.businessurl" type="text" class="form-control">
+                                        </div>
+                                        <!-- <label class="fg-label">Email</label> -->
+                                    </div>
+                                    <div class="form-group fg-float">
+                                        <div class="fg-line">
+                                            <input required="required" placeholder="Email:" ng-model="user.email" type="email" class="form-control">
+                                        </div>
+                                        <!-- <label class="fg-label">Email</label> -->
+                                    </div>
+
+                                    <div class="form-group fg-float">
+                                        <div class="fg-line">
+                                            <input required="required"placeholder="Choose Password :" ng-model="user.password" type="password" class="form-control">
+                                        </div>
+                                        <!-- <label class="fg-label">Password</label> -->
+                                    </div>
+                                    <span class="bluish-normal underlined center-block text-center">Why is Cape 66° membershio $12 a month?</span>
+                                    <div class="col-xs-12 ">
+                                        <p class="font-black center-block text-center font-size-12">
+                                            By clicking join Us,you agree to Cape 66°'s <a href="#" class="bluish-normal underlined">User Agreement</a>, <a  href="#" class="bluish-normal underlined ">Privacy Policy </a>, and <a  href="#" class="bluish-normal underlined">Cookie Policy</a>
+                                        </p>
+                                    </div>
+                                    <div class="row p-15">
+                                        <div class="col-xs-12 text-center">
+                                            <button type="submit" class="btn bgm-blue ">Join Us</button>        
+                                        </div>
+                                    </div>
+                                    
+                               </form> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container login-font">
+                <div class="row">
+                    <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
+                            <h1>Welcome to Cape66<i class="yellow-color">° </i></h1>
+                            <p class="paragrapth-indent"><b>We</b> are a group of business owners who believe in 'paying it forward'. We helped fellow entrepreneurs whenever we could. Helping others allowed us to <b>receive support on our own journeys, start new relationships, & raise awareness of our businesses.</b></p>
+
+                            <p class="paragrapth-indent"><b>So</b> we're launching an online platform to enable every entrepreneur to do the same and to create a <b>global network of entrepreneurs who believe in 'paying it forward.</b></p>
+                    </div>
+
+                </div>
+                
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 ">
+                        <div class="text-center p-15 font-style-size-login border-blue"><i class="yellow-color"> " </i>From day 1 in Cape  66° an entrepreneur can seek support from the entire network.<i class="yellow-color">" </i>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
+                        <h4>In<img src="img/cape66.png" height="20px"/></h4>
+                        <ul class="list-style-none p-0 indent-me m-l-20">
+                            <li class="m-b-10">We ask for <b> personal introductions, supplier recommendations, or advice</b> from the entire network. <br>So we receive the support of the members who can open a door or help solve a problem. </li>
+                            <li class="m-b-10"> Our <b>platform supports the most helpful entrepreneurs</b> by promoting their businesses to the entire network – nationally & internationally. </li>
+                           <li class="m-b-10"> <b>The more you help</b> other entrepreneurs, <b>the more exposure your own requests receive</b> and the more support you get. </li>
+                           <li class="m-b-10">By <b>helping and receiving help</b>, all entrepreneurs have <b>a great way of starting new relationships.</b> <br>You’ll form valuable connections with members you would have never otherwise crossed paths with. </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+             <!--Footer-->
+            <div class="footer">
+                <div class="container">
+                <div class="col-sm-9    col-xs-6">
+                    <ul>
+                        <li>Privacy & Terms</li>
+                    </ul>
+                </div>
+                <div class="col-sm-3 col-xs-6">
+                    <ul width="100%">
+                         <li> Cape 66° &copy; 2016</li>
+                    </ul>
+                </div>
+                </div>
+            </div>
+       
+        </div>
+
+       
+       
+
+
+       
+        <!-- Core -->
+        <script src="vendors/bower_components/jquery/dist/jquery.min.js"></script>
+
+        <!-- Angular -->
+        <script src="vendors/bower_components/angular/angular.min.js"></script>
+        <script src="vendors/bower_components/angular-resource/angular-resource.min.js"></script>
+        <script src="vendors/bower_components/angular-animate/angular-animate.min.js"></script>
+        <script src="vendors/bower_components/angular-resource/angular-resource.min.js"></script>
+
+        
+        <!-- Angular Modules -->
+        <script src="vendors/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+        <script src="vendors/bower_components/angular-loading-bar/src/loading-bar.js"></script>
+        <script src="vendors/bower_components/oclazyload/dist/ocLazyLoad.min.js"></script>
+        <script src="vendors/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+        <script src="vendors/bower_components/angular-socialshare/angular-socialshare.min.js"></script>
+       <!-- <script src="http://platform.twitter.com/widgets.js"></script>
+
+        <!-- Common Vendors -->
+        <script src="vendors/bower_components/jquery.nicescroll/jquery.nicescroll.min.js"></script>
+        <script src="vendors/bower_components/Waves/dist/waves.min.js"></script>
+        <script src="vendors/bower_components/angular-nouislider/src/nouislider.min.js"></script>
+        <script src="vendors/bower_components/ng-table/dist/ng-table.min.js"></script>
+
+        <!-- Placeholder for IE9 -->
+        <!--[if IE 9 ]>
+            <script src="vendors/bower_components/jquery-placeholder/jquery.placeholder.min.js"></script>
+        <![endif]-->
+                
+        <!-- App level -->
+        <script src="js/app.js"></script>
+        <script src="js/config.js"></script>
+        <script src="js/controllers/main.js"></script>
+        <script src="js/services.js"></script>
+<!--        <script src="js/templates.js"></script>-->
+        <script src="js/controllers/ui-bootstrap.js"></script>
+        <script src="js/controllers/table.js"></script>
+         <script src="js/controllers/shares.js"></script>
+        <script src="js/controllers/sharesCont.js"></script>
+
+
+        <!-- Template Modules -->
+        <script src="js/modules/template.js"></script>
+        <script src="js/modules/ui.js"></script>
+        <script src="js/modules/form.js"></script>
+    </body>
+</html>

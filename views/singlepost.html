@@ -1,0 +1,428 @@
+﻿<div class="row row-customin pull-right "   >
+                <div class="col-md-12" >
+                    <div class="col-md-2 col-lg-2 col-xs-0 col-sm-0 hidden-xs"  data-ng-if="newpost.type==='sr'">
+                      <div class="pull-left">
+                            <img  src="img/contacts/5.jpg" alt="" class="wall-img-width">
+                        </div>
+                    </div>
+                      <div class="col-md-2 col-lg-2 col-xs-0 col-sm-0 hidden-xs" style="margin-top:28px "  data-ng-if="newpost.type==='pi'">
+                            <div class="pull-left">
+                                <img  src="img/contacts/6.jpg" alt="" class="wall-img-width">
+                            </div>
+                      </div>
+                      <div class="col-md-2 col-lg-2 col-xs-0 col-sm-0 hidden-xs" style="margin-top:60px "  data-ng-if="newpost.type==='a'">
+                            <div class="pull-left">
+                                <img  src="img/contacts/2.jpg" alt="" class="wall-img-width">
+                            </div>
+                      </div>
+                      <div class="col-md-2 col-lg-2 col-xs-0 col-sm-0 hidden-xs" style="margin-top:60px "  data-ng-if="newpost.type==='w'">
+                            <div class="pull-left">
+                               
+                            </div>
+                      </div>
+                      <div class="col-md-10 col-sm-12  col-lg-10 col-xs-12" >
+                         
+                            <div class="card"   data-ng-if="newpost.type === 'sr'"  >
+                               <div class="card-header p-10" >
+                                    <div class="media">
+                                       <div class="media-body m-t-5">
+                                            <h2> <b><i class="zmdi zmdi-check zmdi-hc-fw"></i></b>Can you recommend a supplier to "<a data-ui-sref="pages.viewprofile.viewprofile-timeline"> <i>{{newpost.user.firstname}} {{newpost.user.lastname}} " </i></a><b> ? </b></h2>
+                                            <h5 class="font-color"> <a class="font-color" target="_blank" href="#"> {{newpost.user.businessname}} </a>- {{newpost.user.industry}} <i class="zmdi zmdi-pin zmdi-hc-fw"></i> {{newpost.user.city}} , {{newpost.user.country}} </h5>
+                                            
+                                       </div>
+                                    </div>
+                                </div>
+                                <div class="card-body card-padding" >
+                                <h5>{{newpost.message}}</h5>                   
+                                <div class="wall-img-preview lightbox clearfix"  data-ng-if="newpost.url!== NULL">
+                                    <div class="wip-item" data-src="{{newpost.url}}" style="background-image: url({{newpost.url}});">
+                                        <div class="lightbox-item"></div>
+                                    </div>
+                                </div>
+                                <ul class="wall-attrs clearfix list-inline list-unstyled">
+                                      
+
+                                      <li class="wa-users">
+                                          <div class="btn-colors btn-demo" data-ng-if="!newctrl.wallCommenting[newpost.id]" data-ng-click="newctrl.wallCommenting[newpost.id] = true">
+
+                                             <button class="btn bgm-black zmdi zmdi-check "  > Recommend</button>
+
+                                          </div>
+                                           
+                                      </li>
+                                </ul> 
+                                </div>
+                                <div class="wall-comment-list" data-ng-if="newpost.type==='sr'">
+                                    
+                                    <div class="wcl-form">
+                                        <div class="wc-comment bgm-white p-10 m-b-5" data-ng-if="newctrl.wallCommenting[newpost.id]">
+                                            <form  class="w-100" > 
+                                                <p>Who would you like to recommend ?</p>
+                                               <div class="row m-b-0">
+                                                   <div class="col-sm-6 ">
+                                                       <div class="form-group">
+                                                           <div class="fg-line">
+                                                               <input type="text" ng-model="name" class="form-control" placeholder="Name">
+                                                           </div>
+                                                       </div>
+                                                        <div class="form-group">
+                                                           <div class="fg-line">
+                                                               <input type="text" ng-model="phone" class="form-control" placeholder="Phone">
+                                                           </div>
+                                                       </div>
+                                                       <div class="form-group">
+                                                           <div class="fg-line">
+                                                               <input type="text" ng-model="company" class="form-control" placeholder="Company(optional)">
+                                                           </div>
+                                                       </div>
+
+                                                   </div>
+                                                   <div class="col-sm-6">
+                                                      <div class="form-group">
+                                                           <div class="fg-line">
+                                                               <input type="email" ng-model="email" class="form-control" placeholder="Email">
+                                                           </div>
+                                                       </div>
+                                                       <div class="form-group ">
+                                                           <div class="fg-line">
+                                                               <textarea ng-model="message" class="form-control" rows="5" data-auto-size placeholder="Message (optional)......"></textarea>
+                                                           </div>
+                                                       </div>
+                                                     
+                                                   </div>
+                                               </div>
+                                               <div class="row m-l-0 m-r-0">
+                                                    <div class="checkbox m-b-15 pull-left">
+                                                         
+                                                     <select ng-init="tab.isPrivate = 0 "  ng-model="tab.isPrivate" name="isPrivate" class="selectpicker pull-left p-5">
+                                                        <option  value="0"  >Public</option>
+                                                        <option  value="1"  >Private</option>
+                                                    </select>
+
+                                                   </div>
+                                                   <div class="m-t-15 pull-right">
+
+                                                       <button  ng-click="showFunchion(newpost.id,newpost.type,newpost.user.id,email,message,tab.isPrivate,company,phone,name);showReplyfunction()" class="btn bgm-black waves-effect btn-sm btn-primary">Share Supplier Details</button>
+                                                       <button class="btn bgm-black waves-effect btn-sm btn-link c-white" data-ng-click="newctrl.wallCommenting[newpost.id] = false">Cancel</button>
+                                                   </div>
+                                               </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="wcl-list m-t-10 p-10" data-ng-if="newpost.replies.length !== 0;newpost.replies_is_private === '0' ">
+                                        <div class="media" ng-repeat="replies in newpost.replies"  data-ng-if="replies.is_private === '0' ; ">
+                                            <a data-ui-sref="pages.viewprofile.viewprofile-timeline" class="pull-left">
+                                                <img src="{{request.user.imgurl}}" alt="" class="lv-img-sm">
+                                            </a>
+                 
+                                            <div class="media-body">
+                                                <a data-ui-sref="pages.viewprofile.viewprofile-timeline" class="a-title">{{replies.user.firstname}} {{replies.user.lastname}} - </a> <a target="_blank" href="#">{{ replies.user.businessname }}</a> <br><small>{{ replies.user.industry }} - {{ replies.user.city }},{{ replies.user.country }}</small>
+                                                <p class="m-t-5 m-b-0">Recommended {{replies.message}} </p>
+                                            </div>
+                                        
+                                            <ul class="actions">
+                                                <li class="dropdown" dropdown="">
+                                                    <a href="" dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="zmdi zmdi-more-vert"></i>
+                                                    </a>
+                                    
+                                                    <ul class="dropdown-menu dropdown-menu-right">
+                                                        <li>
+                                                            <a href="">Report</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="">Delete</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                               
+                                </div>
+                            </div>
+                            <div class="card"  data-ng-if="newpost.type==='pi'" >
+                                <div class="card-header p-10" >
+                                    <div class="media">
+                                       <div class="media-body m-t-5">
+                                            <h2> <b><i class="zmdi zmdi-swap zmdi-hc-fw"></i></b>Can you make a personal Intro for "<a data-ui-sref="pages.viewprofile.viewprofile-timeline"> <i>{{newpost.user.firstname}} {{newpost.user.lastname}} " </i></a><b> ? </b></h2>
+                                            <h5 class="font-color"> <a class="font-color" target="_blank" href="#"> {{newpost.user.businessname}} </a>- {{newpost.user.industry}} <i class="zmdi zmdi-pin zmdi-hc-fw"></i> {{newpost.user.city}} , {{newpost.user.country}} </h5>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body card-padding">
+                                    <h5 class="font-">{{newpost.message}}</h5>                  
+                                    <div class="wall-img-preview lightbox clearfix"  data-ng-if="newpost.url!== NULL">
+                                        <div class="wip-item" data-src="{{newpost.url}}" style="background-image: url({{newpost.url}});">
+                                            <div class="lightbox-item"></div>
+                                        </div>
+                                    </div>
+
+                                    <ul class="wall-attrs clearfix list-inline list-unstyled">
+                                        <li class="wa-users">
+                                            <div class="btn-colors btn-demo">
+                                                <a href="" ><button class="btn bgm-black zmdi zmdi-swap" data-ng-if="!newctrl.wallCommenting[newpost.id]" data-ng-click="newctrl.wallCommenting[newpost.id] = true"> make intro</button></a>
+                                            </div>
+                                       </li>
+                                    </ul> 
+                                </div>
+                                <div class="wall-comment-list" >
+
+                                    <div class="wcl-form">
+                                        <div class="wc-comment bgm-white p-10 m-b-5" data-ng-if="newctrl.wallCommenting[newpost.id]">
+                                            <form  class="w-100" ng-submit="showFunchion(newpost.id,newpost.type,newpost.user.id ,email,message,'','','','');showReplyfunction()">
+                                                <h5>Introduce {{newpost.user.firstname}} {{newpost.user.lastname}} to: </h5>
+
+                                               <div class="row emailpreview m-b-10 p-10">
+                                                    <div class="ccol-sm-12 col-lg-12 col-md-12 col-xs-12 m-b-0 ">
+                                                        <div class="form-group">
+                                                           <div class="fg-line">
+                                                               <input type="email" ng-model="email" class="form-control" placeholder="Email" required >
+                                                           </div>
+                                                       </div>
+                                                    </div>
+                                                    <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <div class="fg-line">
+                                                                <textarea ng-model="message" class="form-control" rows="5" data-auto-size placeholder="Message (optional)......"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row p-5 emailpreview">
+                                                    <p class="font-color">Subject: “ Intro From {{User.firstname}} {{User.lastname}}  through Reciprocas  </p> 
+
+                                                    <p> Message provided by user </p>
+                                                    <p>{{message}}</p>
+
+                                                    <p class="font-color">Sent through Reciprocās</p>
+                                                   
+
+                                                </div>
+                                                <div class="row m-l-0 m-r-0">
+                                                    <div class="m-t-15 col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                                                        <div>
+                                                            <span class="pull-left m-r-25">An email will be sent to your contact copying {{User.firstname}}. Thank you
+                                                            </span>
+                                                            <button type="submit" class="btn bgm-black waves-effect btn-sm btn-primary">Send</button>
+                                                            <button class="btn bgm-black waves-effect btn-sm btn-link c-white btn-margin-in-wall  " data-ng-click="newctrl.wallCommenting[newpost.id] = false">Cancel</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card"  data-ng-if="newpost.type === 'a'">
+                               <div class="card-header p-10" >
+                                    <div class="media">
+                                       <div class="media-body m-t-5">
+                                            <h2> <b><i class="zmdi zmdi-info zmdi-hc-fw"></i> </b>Can you give advice to  "<a data-ui-sref="pages.viewprofile.viewprofile-timeline"> <i>{{newpost.user.firstname}} {{newpost.user.lastname}} " </i></a><b> ? </b></h2>
+                                            <h5 class="font-color"> <a class="font-color" target="_blank" href="#"> {{newpost.user.businessname}} </a>- {{newpost.user.industry}} <i class="zmdi zmdi-pin zmdi-hc-fw"></i> {{newpost.user.city}} , {{newpost.user.country}} </h5>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body card-padding">
+                                    <h5 class="font-">{{newpost.message}}</h5>                    
+                                    <div class="wall-img-preview lightbox clearfix" data-ng-if="newpost.url!== NULL" >
+                                        <div class="wip-item"  data-src="{{newpost.url}}" style="background-image: url({{newpost.url}});">
+                                            <div class="lightbox-item"></div>
+                                        </div>
+                                    </div>
+
+                                    <ul class="wall-attrs clearfix list-inline list-unstyled">
+                                        <li class="wa-users">
+                                            <div class="btn-colors btn-demo">
+
+                                                <a href="" ><button class="btn bgm-black zmdi zmdi-info" data-ng-if="!newctrl.wallCommenting[newpost.id]" data-ng-click="newctrl.wallCommenting[newpost.id] = true"> Give an Advice</button></a>
+
+                                            </div>
+                                       </li>
+                                    </ul> 
+                                </div>
+                                <div class="wall-comment-list" data-ng-if="newpost.type==='a'">
+                                    
+                                    <div class="wcl-form">
+                                        <div class="wc-comment bgm-white p-10 m-b-5" data-ng-if="newctrl.wallCommenting[newpost.id]">
+                                            <form class="wcl-form"> 
+                                             <div class="row m-b-0">
+                                                   <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12">
+                                                       <div class="form-group ">
+                                                           <div class="fg-line">
+                                                               <textarea required ng-model="message" class="form-control" rows="5" data-auto-size placeholder="Message ......"></textarea>
+                                                           </div>
+                                                       </div>
+                                                     
+                                                   </div>
+                                               </div>
+                                               <div class="row m-l-0 m-r-0">
+                                                    <div class="checkbox m-b-15 pull-left">
+                                                       <select ng-init="tab.isPrivate = 0 "  ng-model="tab.isPrivate" name="isPrivate" class="selectpicker pull-left p-5">
+                                                            <option  value="0"  >Public</option>
+                                                            <option  value="1"  >Private</option>
+                                                       </select>
+                                                   </div>
+                                                   <div class="m-t-15 pull-right">
+
+                                                       <button  ng-click="showFunchion(newpost.id,newpost.type,newpost.user.id,'',message,tab.isPrivate,'','','');showReplyfunction()" class="btn bgm-black waves-effect btn-sm btn-primary">Send</button>
+                                                       <button class="btn bgm-black waves-effect btn-sm btn-link c-white btn-margin-in-wall" data-ng-click="newctrl.wallCommenting[newpost.id] = false">Cancel</button>
+                                                   </div>
+                                               </div>
+                                            </form>
+                                             <hr>
+                                        </div>
+
+                                    </div>
+                                   
+                                    
+                                    <div class="wcl-list m-t-10 p-10" data-ng-if="newpost.replies.length !== 0;newpost.replies_is_private === '0'">
+                                        <div class="media" ng-repeat="replies in newpost.replies" data-ng-if="replies.is_private === '0' ">
+                                            <a data-ui-sref="pages.viewprofile.viewprofile-timeline" class="pull-left">
+                                                <img src="{{request.imgurl}}" alt="" class="lv-img-sm">
+                                            </a>
+                 
+                                            <div class="media-body">
+                                                <a data-ui-sref="pages.viewprofile.viewprofile-timeline" class="a-title">{{replies.user.firstname}} {{replies.user.lastname}} - </a> <a target="_blank" href="#">{{ replies.user.businessname }}</a> <br><small>{{ replies.user.industry }} - {{ replies.user.city }},{{ replies.user.country }}</small>
+                                                <p class="m-t-5 m-b-0 text-justify">{{replies.message}}</p>
+                                            </div>
+                                        
+                                            <ul class="actions">
+                                                <li class="dropdown" dropdown="">
+                                                    <a href="" dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="zmdi zmdi-more-vert"></i>
+                                                    </a>
+                                    
+                                                    <ul class="dropdown-menu dropdown-menu-right">
+                                                        <li>
+                                                            <a href="">Report</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="">Delete</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card pull-right"  data-ng-if="newpost.type==='w'">
+                                <div class="media">
+                                    <div class="col-md-4 col-xs-12 col-sm-6 pull-left">
+                                        <div class="col-md-8 m-l-30 m-t-25">
+                                            <img class="wall-img-width" id="image-profile" src="img/contacts/8.jpg" alt="">
+                                        </div>
+                                        <div class="col-md-12 col-xs-12 text-center">
+                                          <a  target="_blank" href="#"> <h6 class="font-color">wwww.equation-solutions.com</h6></a>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-xs-12  col-sm-6 pull-right m-b-30">
+                                            <h4 class="font-color">Welcome {{newpost.user.firstname}} {{newpost.user.lastname}} , {{newpost.user.industry}}</h4>
+                                            <p class="font-">{{newpost.user.businessname}} - {{newpost.user.city}},{{newpost.user.country}}</p>
+                                            <p>Lorem ispum dolor sit amet, consectetur</p>
+                                            <p>adipiscing elit ,sed do eiusmod huytakk jsjjkjsd lolakieh</p>
+                                    </div>
+                                 </div>
+                                 <ul class="wall-attrs clearfix list-inline list-unstyled welcomepostul">
+                                    <li class="wa-stats pull-left">
+                                        <span><i class="zmdi zmdi-account-box zmdi-hc-fw font-size-zmd" data-ng-if="!newctrl.detailsCommenting[newpost.id]" data-ng-click="newctrl.detailsCommenting[newpost.id] = true ; newctrl.shareCommenting[newpost.id] = false"></i>know anyone that should learn about {{newpost.user.businessname}} ? </span>
+                              
+                                    </li>
+                                     <li class="wa-stats ">
+                                        <span><i class="zmdi zmdi-mail-reply zmdi-hc-fw font-size-zmd" data-ng-if="!newctrl.shareCommenting[newpost.id]" data-ng-click="newctrl.shareCommenting[newpost.id] = true ; newctrl.detailsCommenting[newpost.id] = false "></i>Share what {{newpost.user.businessname}} does</span>
+                                
+                                    </li>
+                                
+                                </ul> 
+                                <div class="wall-comment-list" >
+                                  <div class="wcl-form">
+                                        <div class="wc-comment bgm-white p-10 m-b-5" data-ng-if="newctrl.detailsCommenting[newpost.id]">
+                                            <form  class="w-100">
+                                              
+                                                <h5>Send the Details of {{newpost.user.businessname}} to</h5>
+
+                                              <div class="row emailpreview m-b-10 p-10">
+                                                    <div class="ccol-sm-12 col-lg-12 col-md-12 col-xs-12 m-b-0 ">
+                                                         <div class="form-group">
+                                                           <div class="fg-line">
+                                                               <input type="email" ng-model="email" class="form-control" placeholder="Email">
+                                                           </div>
+                                                       </div>
+                                                    </div>
+                                                     <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <div class="fg-line">
+                                                                <textarea ng-model="message" class="form-control" rows="5" data-auto-size placeholder="Message (optional)......"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                   
+                                                </div>
+                                                <div class="row p-5 emailpreview">
+                                                    <p class="font-color">Subject: “ From {{User.firstname}} {{User.lastname}} through Reciprocas  </p> 
+
+                                                    <p class="font-color"> I came across this business on Reciprocās and through it would be interest you <br> {{User.firstname}} {{User.lastname}} </p>
+
+                                                    <p>+Personal message (optional)</p>
+                                                    <p>{{message}}</p>
+                                                   
+
+                                                </div>
+                                                <div class="row m-l-0 m-r-0">
+                                                   <div class="m-t-15 col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                                                        <div>
+                                                            <span class="pull-left m-r-25">An email will be sent to your contact copying {{User.firstname}}. Thank you
+                                                            </span>
+                                                            <button ng-click="showFunchion(newpost.id,newpost.type,newpost.user.id ,email,message,'','','','');showReplyfunction()"  class="btn bgm-black waves-effect btn-sm btn-primary">Send</button>
+                                                            <button class="btn bgm-black waves-effect btn-sm btn-link c-white btn-margin-in-wall " data-ng-click="newctrl.detailsCommenting[newpost.id] = false">Cancel</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="wc-comment bgm-white p-10 m-b-5" data-ng-if="newctrl.shareCommenting[newpost.id]">
+                                            <form  class="w-100">
+
+                                            <h5>You can share using :</h5>
+                                                <ul class="wall-attrs clearfix list-inline list-unstyled">
+
+                                                <li class="wa-stats" tooltip="Facebook">
+                                                    <span><i class="zmdi  zmdi-facebook-box font-size-zmd font-width-zmd"></i></span>
+                                          
+                                                </li>
+                                                  
+                                                  <li class="wa-stats" tooltip="Twitter">
+                                                    <span><i class="zmdi zmdi-share zmdi-twitter-box font-size-zmd font-width-zmd"></i></span>
+                                          
+                                                </li>
+                                                <li class="wa-stats" tooltip="Linkedin">
+                                                    <span><i class="zmdi zmdi-linkedin-box zmdi-hc-fw font-size-zmd font-width-zmd"></i></span>
+                                            
+                                                </li>
+                                                <li class="wa-stats" tooltip="Google plus">
+                                                    <span><i class="zmdi zmdi-google-plus-box zmdi-hc-fw font-size-zmd font-width-zmd"></i></span>
+                                            
+                                                </li>
+                                            </ul> 
+                                               
+                                                <div class="row m-l-0 m-r-0">
+                                                    <div class="m-t-15 col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                                                        <div>
+                                                          <button class="btn bgm-black waves-effect btn-sm btn-link c-white btn-margin-in-wall " data-ng-click="newctrl.shareCommenting[newpost.id] = false">Cancel</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                      </div>
+                    </div>
+  </div>

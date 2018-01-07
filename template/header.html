@@ -1,0 +1,134 @@
+<!--- new header -->
+<div class="container" data-ng-controller="notificationCtrl">
+    <div class="row">
+        <ul class="header-inner p-b-10">
+          
+
+            <li class="logo">
+                <a data-ui-sref="pages.wall" data-ng-click="mactrl.sidebarStat($event)"> <img src="img/cape66.png" class="logo-max-min" />
+                    {{ layoutSS }}</a>
+            </li>
+             
+            <li class="pull-right">
+                <ul class="top-menu">
+                    <li id="top-search">
+                        <a class="" href="" data-ng-click="hctrl.openSearch()"><i class="material-icons ">search</i></a>
+                    </li>
+                    <li class="dropdown " dropdown>
+                        <a dropdown-toggle class="" ng-click="getMessages();" href=""><i class="material-icons">forum</i><i class="tmn-counts">{{messagenumber}}</i></a>
+                        <div class="dropdown-menu dropdown-menu-lg stop-propagate pull-right notification_menu">
+                            <div class="listview">
+                                <div class="lv-header">
+                                    Messages
+                                </div>
+                                <div class="lv-body font-black">
+                                    <a class="lv-item" ng-href=""  ng-repeat="message in messages">
+                                        <div class="media">
+                                        <div class="col-xs-12 ">
+                                            <div class="col-xs-2 text-left clear-padding">
+                                                <img ng-if="noti.img !== 'NAN'" class="img-responsive" ng-src="{{ message.sender.image }}" alt="">
+                                                <img ng-if="noti.img === 'NAN'" class="img-responsive" ng-src="img/contacts/male.png" alt="">
+                                            </div>
+                                            <div class="col-xs-10">
+                                                <div class="font-black notification-link" ui-sref="pages.profile({userid: message.sender.fromuser_id})">{{message.sender.firstname}} {{message.sender.lastname}}</div>
+                                                 <span  ng-if="noti.type === 'Advice'" class=" font-black font-size-14">Sent you a message. </span>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="clearfix"></div>
+                                
+                                <a  data-ui-sref="pages.messages" class="lv-footer" href="">View All</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="dropdown" dropdown >
+                        <a dropdown-toggle class="" href=""><i class="material-icons">email</i><i class="tmn-counts">{{Notification_headr.length}}</i></a>
+                        <div class="dropdown-menu dropdown-menu-lg stop-propagate pull-right notification_menu">
+                            <div class="listview" id="notifications">
+                                <div class="lv-header">
+                                    Notifications ({{Notification_headr.length}})
+
+                                    <ul class="actions">
+                                        <li>
+                                            <a href="" data-ng-click="hctrl.clearNotification($event)">
+                                                <i class="zmdi zmdi-check-all"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="lv-body">
+                                    <span class="lv-item font-black" ng-href="" ng-repeat="noti in Notification_headr">
+                                        <div class="media">
+                                        <div class="col-xs-12 ">
+                                            <div class="col-xs-2 text-left clear-padding">
+                                                <img ng-if="noti.img !== 'NAN'" class="img-responsive" ng-src="{{ noti.img }}" alt="">
+                                                <img ng-if="noti.img === 'NAN'" class="img-responsive" ng-src="img/contacts/male.png" alt="">
+                                            </div>
+                                            <div class="col-xs-10">
+                                                <div class="font-black notification-link" ui-sref="pages.profile({userid: noti.fromuser_id})">{{noti.firstname}} {{noti.lastname}}</div>
+                                                 <span  ng-if="noti.type === 'Advice'" class=" font-black font-size-14">has provided you with an advice. </span>
+                                                    <span  ng-if="noti.type === 'Supplier Recommendation'" class=" font-black font-size-14">has provided you with a supplier recommendation. </span>
+                                                    <span  ng-if="noti.type === 'Personal Intro'" class=" font-black font-size-14">has provided you with a prersonal intro. </span>
+                                                    <span class="clearfix">Thank <span ui-sref="pages.profile({userid: noti.fromuser_id})" class="notification-link">{{ noti.firstname }} {{ noti.lastname }} </span> by paying forward.</span>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </span>
+                                </div>
+                                
+                                <div class="clearfix"></div>
+
+                                <a class="lv-footer" href="">View Previous</a>
+                            </div>
+
+                        </div>
+                    </li>
+                    <li  class="hidden-lg hidden-md" id="menu-trigger" data-target="mainmenu" data-toggle-sidebar data-model-left="mactrl.sidebarToggle.right" data-ng-class="{ 'open': mactrl.sidebarToggle.right === true }">
+                        <div class="line-wrap">
+                            <div class="line top"></div>
+                            <div class="line center"></div>
+                            <div class="line bottom"></div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="wrapper hidden-xs hidden-sm">
+    <div class="container">
+        <div class="row">
+            <ul class="header-inner2   hidden-sm hidden-xs">
+                <li data-ui-sref-active="active">
+                    <a data-ui-sref="pages.wall" data-ng-click="mactrl.sidebarStat($event)"  class="m-r-15">Home</a>
+                </li>
+                <li data-ui-sref-active="active" class="logo">
+                    <a data-ui-sref="pages.myprofile" data-ng-click="mactrl.sidebarStat($event)">Profile</a>
+                </li>
+                <li data-ui-sref-active="active" class="logo">
+                    <a  data-ui-sref="pages.team"  data-ng-click="mactrl.sidebarStat($event)">Team</a>
+                </li>
+                <li data-ui-sref-active="active" class="logo">
+                    <a data-ui-sref="pages.request"  data-ng-click="mactrl.sidebarStat($event)">Request</a>
+                </li>
+                <li data-ui-sref-active="active" class="logo remove-border">
+                    <a data-ui-sref="pages.topenterpreneurs"  data-ng-click="mactrl.sidebarStat($event)"> Top Entrepreneurs</a>
+                </li>
+                <li data-ui-sref-active="active" class="pull-right advancedsettings">
+                    <a data-ui-sref="#" ng-click="logout()">Logout</a>  
+                </li>
+                <li data-ui-sref-active="active" class="pull-right advancedsettings" >
+                    <a data-ui-sref="pages.accountsetting" class="pull-right" data-ng-click="mactrl.sidebarStat($event)">Account Settings</a>  
+                </li>   
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Top Search Content -->
+<div id="top-search-wrap">
+    <input type="text">
+    <i id="top-search-close" data-ng-click="hctrl.closeSearch()">&times;</i>
+</div>
